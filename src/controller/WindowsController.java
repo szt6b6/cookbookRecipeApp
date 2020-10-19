@@ -18,7 +18,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -189,7 +188,7 @@ public class WindowsController implements Initializable {
 		amount.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("totalAmountIng"));
 		unit.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("unitIng"));
 		ingredientsTable.setItems(ingredients);
-		this.addButtonToTable();
+		this.addButtonToTable("createWindow");
 
 		// detailWindow initialize
 		name_in_detail.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("nameIng"));
@@ -200,7 +199,7 @@ public class WindowsController implements Initializable {
 		this.addButtonToTable("detailWindow");
 	}
 
-	private void addButtonToTable() {
+	private void addButtonToTable(String fromWhichWindow) {
 		TableColumn<Ingredient, String> colBtn = new TableColumn<>();
 
 		Callback<TableColumn<Ingredient, String>, TableCell<Ingredient, String>> cellFactory = new Callback<TableColumn<Ingredient, String>, TableCell<Ingredient, String>>() {
