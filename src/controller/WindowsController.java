@@ -19,7 +19,6 @@ import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -32,8 +31,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import model.Model;
@@ -58,7 +55,7 @@ public class WindowsController implements Initializable {
 	private ArrayList<Ingredient> neededToDelIngredientInDetailWindow = new ArrayList<>(); // used to store the deleted
 																							// ingredient by clinking
 																							// del in detailWindow
-
+	
 	/**
 	 * mainWindow GUI items
 	 */
@@ -200,7 +197,7 @@ public class WindowsController implements Initializable {
 		amount_in_detail.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("totalAmountIng"));
 		unit_in_detail.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("unitIng"));
 		ingredientsTable_in_detail.setItems(ingredients_in_detail);
-		this.addButtonToTable();
+		this.addButtonToTable("detailWindow");
 	}
 
 	private void addButtonToTable() {
@@ -214,9 +211,15 @@ public class WindowsController implements Initializable {
 					{
 						btn.setOnAction((ActionEvent event) -> {
 							Ingredient data = getTableView().getItems().get(getIndex());
-							neededToDelIngredientInDetailWindow.add(data);//used to store deleted ingredients by clicking del button to update
+							if(fromWhichWindow == "detailWindow") {
+								neededToDelIngredientInDetailWindow.add(data);//used to store deleted ingredients by clicking del button to update
 							ingredients_in_detail.remove(data);
 							ingredientsTable_in_detail.refresh();
+							} else {
+								ingredients.remove(data);
+								ingredientsTable.refresh();
+							}
+							
 						});
 					}
 
@@ -235,8 +238,12 @@ public class WindowsController implements Initializable {
 		};
 
 		colBtn.setCellFactory(cellFactory);
-
-		ingredientsTable_in_detail.getColumns().add(colBtn);
+		if(fromWhichWindow == "detailWindow") {
+			ingredientsTable_in_detail.getColumns().add(colBtn);
+		} else {
+			ingredientsTable.getColumns().add(colBtn);
+		}
+		
 
 	}
 
@@ -286,7 +293,7 @@ public class WindowsController implements Initializable {
 	}
 
 	public void setDataAtDetailWindow(Recipe searchedRecipe) {
-		// 赋值， transform recipe's data to detail window items
+		// 璧嬪�硷紝 transform recipe's data to detail window items
 		String searchedRecipeName = searchedRecipe.getName();
 		recipeNameToBeUpdate = searchedRecipeName;
 		String searchedRecipePrepTime = searchedRecipe.getPrepTime();
@@ -321,7 +328,7 @@ public class WindowsController implements Initializable {
 				Image image = new Image("file:" + pic.getAbsolutePath());
 				picture_in_detail.setImage(image);
 			} catch (NullPointerException e) {
-				// cancle select picture， do nothing
+				// cancle select picture锛� do nothing
 			}
 
 		}
@@ -422,7 +429,7 @@ public class WindowsController implements Initializable {
 				Image image = new Image("file:" + pic.getAbsolutePath());
 				picture.setImage(image);
 			} catch (NullPointerException e) {
-				// cancle select picture， do nothing
+				// cancle select picture锛� do nothing
 			}
 
 		}
@@ -454,7 +461,7 @@ public class WindowsController implements Initializable {
 				windowsView.alertWindow();
 				return;
 			}
-//			Image picture = new Image(recipeResult.getBlob("picture").getBinaryStream()); //将Blob图片转化为javafx Image
+//			Image picture = new Image(recipeResult.getBlob("picture").getBinaryStream()); //灏咮lob鍥剧墖杞寲涓簀avafx Image
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			BufferedImage bImage = SwingFXUtils.fromFXImage(picture.getImage(), null);
 			Recipe stored_recipe;
@@ -483,7 +490,7 @@ public class WindowsController implements Initializable {
 				ingredients.clear();
 				this.showCreateWindow();
 			} catch (NullPointerException e) {
-				// cancle select picture， do nothing
+				// cancle select picture锛� do nothing
 			}
 
 		}

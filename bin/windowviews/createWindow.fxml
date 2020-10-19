@@ -17,10 +17,10 @@
 	<children>
       <TableView fx:id="ingredientsTable" cache="true" editable="true" layoutX="282.0" layoutY="222.0" prefHeight="349.0" prefWidth="282.0" tableMenuButtonVisible="true">
          <columns>
-            <TableColumn fx:id="name" prefWidth="59.0" text="nameCol" />
-            <TableColumn fx:id="description" prefWidth="87.0" text="descriptionCol" />
-            <TableColumn fx:id="amount" prefWidth="71.0" text="amountCol" />
-            <TableColumn fx:id="unit" prefWidth="51.0" text="unitCol" />
+            <TableColumn fx:id="name" editable="false" prefWidth="54.0" text="nameCol" />
+            <TableColumn fx:id="description" editable="false" prefWidth="64.0" text="descripCol" />
+            <TableColumn fx:id="amount" editable="false" prefWidth="68.0" text="amountCol" />
+            <TableColumn fx:id="unit" editable="false" prefWidth="52.0" text="unitCol" />
          </columns>
          <cursor>
             <Cursor fx:constant="DEFAULT" />
