@@ -57,6 +57,7 @@ public class DatabaseController {
 				}
 				statement.execute();
 			}
+			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -83,8 +84,8 @@ public class DatabaseController {
 			for (Ingredient ingredient : neededToDelIngredientInDetailWindow) {
 				String sql_deleteIngredientsFirst = "delete from ingredients where ingredientName = \""
 						+ ingredient.getNameIng() + "\" and description = \"" + ingredient.getDescriptionIng()
-						+ "\" and amount = \"" + ingredient.getAmountIng() + "\" and unit = \"" + ingredient.getUnitIng()
-						+ "\";";
+						+ "\" and amount = \"" + ingredient.getAmountIng() + "\" and unit = \""
+						+ ingredient.getUnitIng() + "\";";
 				statement.execute(sql_deleteIngredientsFirst);
 			}
 			if (recipe.getIngredients().size() != 0) {
@@ -98,6 +99,7 @@ public class DatabaseController {
 				}
 			}
 			statement.execute();
+			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -113,6 +115,7 @@ public class DatabaseController {
 			String sql_deleteIngredients = "delete from ingredients where recipeName = \"" + recipeName + "\";";
 			statement.execute(sql_deleteRecipe);
 			statement.execute(sql_deleteIngredients);
+			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -137,7 +140,7 @@ public class DatabaseController {
 				String category = recipeResult.getString("category");
 				Recipe searchedRecipe = new Recipe(recipeName, prepTime, cookTime, picture, instruction, category);
 
-				String sql_searchIngredients = "SELECT ingredientName, description, amount, unit FROM cookbookrecipes.ingredients where recipeName = \""
+				String sql_searchIngredients = "SELECT ingredientName, description, amount, unit from ingredients where recipeName = \""
 						+ recipeName + "\";";
 				ResultSet ingredientsResult = statement.executeQuery(sql_searchIngredients);
 				ArrayList<Ingredient> ingredients = new ArrayList<>();
@@ -152,10 +155,54 @@ public class DatabaseController {
 				searchedRecipe.setIngredients(ingredients);
 				return searchedRecipe;
 			}
+			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 		return null;
+	}
+
+	public ArrayList<Recipe> searchRecipeList(String searchedCategory) {
+		Statement statement;
+		ArrayList<Recipe> stored_recipes = new ArrayList<>();
+		try {
+			statement = connection.createStatement();
+			String sql_searchRecipe = "select recipeName, prepTime, cookTime, picture, instruction, category from recipes where category = \""
+					+ searchedCategory + "\"" + ";";
+			ResultSet recipeResult = statement.executeQuery(sql_searchRecipe);
+			while (recipeResult.next()) {
+				String recipeName = recipeResult.getString("recipeName");
+				String prepTime = recipeResult.getString("prepTime");
+				String cookTime = recipeResult.getString("cookTime");
+				Blob picture = recipeResult.getBlob("picture");
+				String instruction = recipeResult.getString("instruction");
+				String category = recipeResult.getString("category");
+				Recipe stored_recipe = new Recipe(recipeName, prepTime, cookTime, picture, instruction, category);
+				stored_recipes.add(stored_recipe);
+			}
+			
+			for (Recipe recipe : stored_recipes) {
+				String recipeName = recipe.getName();
+				String sql_searchIngredients = "SELECT ingredientName, description, amount, unit from ingredients where recipeName = \""
+						+ recipeName + "\";";
+				ResultSet ingredientsResult = statement.executeQuery(sql_searchIngredients);
+				ArrayList<Ingredient> ingredients = new ArrayList<>();
+				while (ingredientsResult.next()) {
+					String ingredientName = ingredientsResult.getString("ingredientName");
+					String description = ingredientsResult.getString("description");
+					String amount = ingredientsResult.getString("amount");
+					String unit = ingredientsResult.getString("unit");
+					Ingredient ingredient = new Ingredient(ingredientName, description, amount, unit, 1);
+					ingredients.add(ingredient);
+				}
+				recipe.setIngredients(ingredients);
+			}
+			
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return stored_recipes;
 	}
 }

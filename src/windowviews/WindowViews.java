@@ -1,6 +1,7 @@
 package windowviews;
 
 import java.net.URL;
+import java.util.ArrayList;
 
 import controller.WindowsController;
 import entity.Recipe;
@@ -51,8 +52,9 @@ public class WindowViews extends Application {
 		setAndShowWindows("recipeWindow.fxml");
 	}
 
-	public void setCategoryWindow() {
+	public void setCategoryWindow(ArrayList<Recipe> stored_recipes) {
 		setAndShowWindows("categoryWindow.fxml");
+		windowController.setDataAtCateGoryWindow(stored_recipes);
 	}
 
 	public void setCreateWindow() {

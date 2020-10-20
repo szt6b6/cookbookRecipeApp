@@ -1,7 +1,11 @@
 package entity;
 
 import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.ArrayList;
+
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class Recipe {
 	String name;
@@ -52,6 +56,14 @@ public class Recipe {
 
 	public void setIngredients(ArrayList<Ingredient> ingredients) {
 		this.ingredients = ingredients;
+	}
+	
+	//this method is for display pictures in catagoryWindow
+	public ImageView getRecipeImage() throws SQLException {
+		ImageView recipeImage = new ImageView(new Image(pic.getBinaryStream()));
+		recipeImage.setFitHeight(200);
+		recipeImage.setFitWidth(300);
+		return recipeImage;
 	}
 
 }

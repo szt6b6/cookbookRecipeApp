@@ -48,26 +48,13 @@ public class WindowsController implements Initializable {
 	private DatabaseController databaseController;
 	private ObservableList<Ingredient> ingredients = FXCollections.observableArrayList();
 	private ObservableList<Ingredient> ingredients_in_detail = FXCollections.observableArrayList();
+	private ObservableList<Recipe> recipesList = FXCollections.observableArrayList();
 	private final ArrayList<String> categires = new ArrayList<>(
 			FXCollections.observableArrayList("stired", "boiled", "fried", "stewed", "baked"));
 	private String recipeNameToBeUpdate = ""; // used for looking for recipe and update it
 	private ArrayList<Ingredient> neededToDelIngredientInDetailWindow = new ArrayList<>(); // used to store the deleted
 																							// ingredient by clinking
 																							// del in detailWindow
-	
-	/**
-	 * mainWindow GUI items
-	 */
-	@FXML
-	private Button b1;
-	@FXML
-	private Button b2;
-	@FXML
-	private Button b3;
-	@FXML
-	private Button b4;
-	@FXML
-	private Button b5;
 
 	/**
 	 * all window GUI items
@@ -175,6 +162,16 @@ public class WindowsController implements Initializable {
 	@FXML
 	private Button searchRecipeButton;
 
+	/**
+	 * cateGoryWindow GUI Items
+	 */
+	@FXML
+	private TableView<Recipe> recipeListTable_in_categoty = new TableView<>();
+	@FXML
+	private TableColumn<Recipe, String> recipeNameColumn_in_category = new TableColumn<>();
+	@FXML
+	private TableColumn<Recipe, ImageView> recipePictureColumn_in_category = new TableColumn<Recipe, ImageView>();
+
 	public WindowsController() {
 		databaseController = new DatabaseController();
 		model = new Model();
@@ -188,7 +185,7 @@ public class WindowsController implements Initializable {
 		amount.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("totalAmountIng"));
 		unit.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("unitIng"));
 		ingredientsTable.setItems(ingredients);
-		this.addButtonToTable("createWindow");
+		this.addDelButtonToTable("createWindow");
 
 		// detailWindow initialize
 		name_in_detail.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("nameIng"));
@@ -196,10 +193,19 @@ public class WindowsController implements Initializable {
 		amount_in_detail.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("totalAmountIng"));
 		unit_in_detail.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("unitIng"));
 		ingredientsTable_in_detail.setItems(ingredients_in_detail);
-		this.addButtonToTable("detailWindow");
+		this.addDelButtonToTable("detailWindow");
+
+		// categoryWindow initialize
+		recipeNameColumn_in_category.setCellValueFactory(new PropertyValueFactory<Recipe, String>("name"));
+		recipePictureColumn_in_category.setCellValueFactory(new PropertyValueFactory<Recipe, ImageView>("recipeImage"));// response
+																														// to
+																														// getRecipeImage
+																														// method
+		recipeListTable_in_categoty.setItems(recipesList);
+		this.addSeeMoreButtonToTable();
 	}
 
-	private void addButtonToTable(String fromWhichWindow) {
+	private void addDelButtonToTable(String fromWhichWindow) {
 		TableColumn<Ingredient, String> colBtn = new TableColumn<>();
 
 		Callback<TableColumn<Ingredient, String>, TableCell<Ingredient, String>> cellFactory = new Callback<TableColumn<Ingredient, String>, TableCell<Ingredient, String>>() {
@@ -210,15 +216,16 @@ public class WindowsController implements Initializable {
 					{
 						btn.setOnAction((ActionEvent event) -> {
 							Ingredient data = getTableView().getItems().get(getIndex());
-							if(fromWhichWindow == "detailWindow") {
-								neededToDelIngredientInDetailWindow.add(data);//used to store deleted ingredients by clicking del button to update
-							ingredients_in_detail.remove(data);
-							ingredientsTable_in_detail.refresh();
+							if (fromWhichWindow == "detailWindow") {
+								neededToDelIngredientInDetailWindow.add(data);// used to store deleted ingredients by
+																				// clicking del button to update
+								ingredients_in_detail.remove(data);
+								ingredientsTable_in_detail.refresh();
 							} else {
 								ingredients.remove(data);
 								ingredientsTable.refresh();
 							}
-							
+
 						});
 					}
 
@@ -237,17 +244,44 @@ public class WindowsController implements Initializable {
 		};
 
 		colBtn.setCellFactory(cellFactory);
-		if(fromWhichWindow == "detailWindow") {
+		if (fromWhichWindow == "detailWindow") {
 			ingredientsTable_in_detail.getColumns().add(colBtn);
 		} else {
 			ingredientsTable.getColumns().add(colBtn);
 		}
-		
-
 	}
 
-	public void showRecipe(ActionEvent event) {
-		windowsView.setRecipesPane();
+	private void addSeeMoreButtonToTable() {
+		TableColumn<Recipe, String> colBtn = new TableColumn<>();
+
+		Callback<TableColumn<Recipe, String>, TableCell<Recipe, String>> cellFactory = new Callback<TableColumn<Recipe, String>, TableCell<Recipe, String>>() {
+			@Override
+			public TableCell<Recipe, String> call(final TableColumn<Recipe, String> param) {
+				final TableCell<Recipe, String> cell = new TableCell<Recipe, String>() {
+					private final Button btn = new Button("detail");
+					{
+						btn.setOnAction((ActionEvent event) -> {
+							Recipe data = getTableView().getItems().get(getIndex());
+							windowsView.setDetailWindow(data);
+						});
+					}
+
+					@Override
+					public void updateItem(String item, boolean empty) {
+						super.updateItem(item, empty);
+						if (empty) {
+							setGraphic(null);
+						} else {
+							setGraphic(btn);
+						}
+					}
+				};
+				return cell;
+			}
+		};
+
+		colBtn.setCellFactory(cellFactory);
+		recipeListTable_in_categoty.getColumns().add(colBtn);
 	}
 
 	public void showMainWindow(ActionEvent event) {
@@ -256,22 +290,10 @@ public class WindowsController implements Initializable {
 
 	public void actionResponseToMainWindow(ActionEvent event) {
 		Button button = (Button) event.getTarget();
-		if (button == b1) {
-			System.out.println("stired");
-		}
-		if (button == b2) {
-			System.out.println("boiled");
-		}
-		if (button == b3) {
-			System.out.println("fired");
-		}
-		if (button == b4) {
-			System.out.println("baked");
-		}
-		if (button == b5) {
-			System.out.println("stewed");
-		}
-	}
+		String searchedCategory = button.getText();
+		ArrayList<Recipe> stored_recipes = databaseController.searchRecipeList(searchedCategory);
+		windowsView.setCategoryWindow(stored_recipes);
+	};;
 
 	public void showSearchWindow() {
 		windowsView.setSearchWindow();
@@ -291,8 +313,16 @@ public class WindowsController implements Initializable {
 		windowsView.setDetailWindow(searchedRecipe);
 	}
 
+	public void setDataAtCateGoryWindow(ArrayList<Recipe> stored_recipes) {
+		recipesList.addAll(stored_recipes);
+		recipeListTable_in_categoty.refresh();
+	}
+
 	public void setDataAtDetailWindow(Recipe searchedRecipe) {
-		// 璧嬪�硷紝 transform recipe's data to detail window items
+		if (searchedRecipe == null) {
+			return;
+		}
+		// set transform recipe's data to detail window items
 		String searchedRecipeName = searchedRecipe.getName();
 		recipeNameToBeUpdate = searchedRecipeName;
 		String searchedRecipePrepTime = searchedRecipe.getPrepTime();
@@ -348,7 +378,7 @@ public class WindowsController implements Initializable {
 		}
 
 		if (pressedButton == updateConfirm) {
-			//delete the ingredients deleted first from database
+			// delete the ingredients deleted first from database
 			String stored_recipeName = recipeName_in_detail.getText();
 			String stored_prepareTime = prepTime_in_detail.getText();
 			String stored_cookTime = cookTime_in_detail.getText();
@@ -370,7 +400,8 @@ public class WindowsController implements Initializable {
 				stored_recipe = new Recipe(stored_recipeName, stored_prepareTime, stored_cookTime, stored_picture,
 						stored_instruction, stored_category);
 				stored_recipe.setIngredients(new ArrayList<Ingredient>(ingredientsTable_in_detail.getItems()));
-				if (databaseController.updateRecipe(stored_recipe, recipeNameToBeUpdate, neededToDelIngredientInDetailWindow)) {
+				if (databaseController.updateRecipe(stored_recipe, recipeNameToBeUpdate,
+						neededToDelIngredientInDetailWindow)) {
 					ingredients_in_detail.clear();
 					windowsView.showUpdataSuccessDialog();
 				} else {
@@ -406,9 +437,7 @@ public class WindowsController implements Initializable {
 			} else {
 				windowsView.alertWindow();
 			}
-
 		}
-
 	}
 
 	public void showCreateWindow() {
@@ -489,7 +518,7 @@ public class WindowsController implements Initializable {
 				ingredients.clear();
 				this.showCreateWindow();
 			} catch (NullPointerException e) {
-				// cancle select picture锛� do nothing
+				// cancle select picture and do nothing
 			}
 
 		}
