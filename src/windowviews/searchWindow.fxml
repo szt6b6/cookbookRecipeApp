@@ -13,29 +13,17 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Pane prefHeight="614.0" prefWidth="571.0"
-	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="controller.WindowsController">
+<Pane prefHeight="634.0" prefWidth="582.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SearchWindowController">
 	<children>
-		<MenuButton contentDisplay="CENTER" layoutX="506.0"
-			layoutY="10.0" mnemonicParsing="false"
-			nodeOrientation="LEFT_TO_RIGHT" text="goto" textAlignment="CENTER"
-			textOverrun="CLIP" wrapText="true">
+		<MenuButton contentDisplay="CENTER" layoutX="470.0" layoutY="14.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="Go To" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
 			<items>
-				<MenuItem fx:id="home" mnemonicParsing="false"
-					onAction="#showMainWindow" text="home" />
-				<MenuItem fx:id="create" mnemonicParsing="false"
-					onAction="#showCreateWindow" text="create" />
-				<MenuItem fx:id="search" mnemonicParsing="false"
-					onAction="#showSearchWindow" text="search" />
+				<MenuItem fx:id="home" mnemonicParsing="false" onAction="#showMainWindow" text="Home" />
+				<MenuItem fx:id="create" mnemonicParsing="false" onAction="#showCreateWindow" text="Create" />
+				<MenuItem fx:id="search" mnemonicParsing="false" onAction="#showSearchWindow" text="Search" />
 			</items>
 		</MenuButton>
-		<TextField fx:id="searchRecipeTextField" alignment="CENTER"
-			layoutX="185.0" layoutY="198.0" prefHeight="25.0" prefWidth="202.0"
-			promptText="please input recipe name" />
-		<Button fx:id="searchRecipeButton" defaultButton="true"
-			layoutX="261.0" layoutY="229.0" mnemonicParsing="false"
-			onAction="#actionResponseToSearchWindow" text="search" />
+		<TextField fx:id="searchRecipeTextField" alignment="CENTER" layoutX="160.0" layoutY="198.0" prefHeight="30.0" prefWidth="263.0" promptText="Please Input Recipe Name" />
+		<Button fx:id="searchRecipeButton" defaultButton="true" layoutX="257.0" layoutY="242.0" mnemonicParsing="false" onAction="#actionResponseToSearchWindow" text="Search" />
 
 	</children>
 </Pane>

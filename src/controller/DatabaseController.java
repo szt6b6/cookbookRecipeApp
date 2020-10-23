@@ -9,8 +9,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import entity.Ingredient;
-import entity.Recipe;
+import model.Ingredient;
+import model.Recipe;
 
 /**
  * DatabaseController class, deliver data from database to model
@@ -66,7 +66,7 @@ public class DatabaseController {
 	}
 
 	public boolean updateRecipe(Recipe recipe, String recipeNameToBeUpdate,
-			ArrayList<Ingredient> neededToDelIngredientInDetailWindow) {
+			ArrayList<Ingredient> neededToDelIngredientInDetailWindow, ArrayList<Ingredient> neededToAddIngredientInDetailWindow) {
 		PreparedStatement statement;
 		try {
 			statement = connection.prepareStatement(
@@ -89,12 +89,11 @@ public class DatabaseController {
 				statement.execute(sql_deleteIngredientsFirst);
 			}
 			if (recipe.getIngredients().size() != 0) {
-				for (Ingredient ingredient : recipe.getIngredients()) {
-					String sql_createIngredients = "update ingredients set recipeName = \"" + recipe.getName() + "\""
-							+ ", ingredientName = \"" + ingredient.getNameIng() + "\"" + ", description = \""
-							+ ingredient.getDescriptionIng() + "\", amount = \"" + ingredient.getAmountIng()
-							+ "\", unit = \"" + ingredient.getUnitIng() + "\" where recipeName = \""
-							+ recipeNameToBeUpdate + "\";";
+				for (Ingredient ingredient : neededToAddIngredientInDetailWindow) {
+					String sql_createIngredients = "insert into ingredients (recipeName, ingredientName, description, amount, unit) values (\""
+							+ recipe.getName() + "\", \"" + ingredient.getNameIng() + "\", \""
+							+ ingredient.getDescriptionIng() + "\", \"" + ingredient.getAmountIng() + "\", \""
+							+ ingredient.getUnitIng() + "\");";
 					statement.execute(sql_createIngredients);
 				}
 			}
