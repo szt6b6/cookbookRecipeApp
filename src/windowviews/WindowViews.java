@@ -1,10 +1,6 @@
 package windowviews;
 
-<<<<<<< Updated upstream
-import java.net.URL;
-=======
 import java.util.ArrayList;
->>>>>>> Stashed changes
 
 import controller.CategoryWindowController;
 import controller.CreateWindowController;
@@ -92,10 +88,6 @@ public class WindowViews extends Application {
 	}
 
 
-<<<<<<< Updated upstream
-	public void setCategoryWindow() {
-		setAndShowWindows("categoryWindow.fxml");
-=======
 	public void setCategoryWindow(ArrayList<Recipe> stored_recipes) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("categoryWindow.fxml"));
@@ -108,7 +100,6 @@ public class WindowViews extends Application {
 			e.printStackTrace();
 		}
 		categoryWindowController.setDataAtCateGoryWindow(stored_recipes);
->>>>>>> Stashed changes
 	}
 
 	public void setCreateWindow() {

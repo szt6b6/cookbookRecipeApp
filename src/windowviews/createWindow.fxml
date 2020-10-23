@@ -36,18 +36,6 @@
 				<MenuItem fx:id="search" mnemonicParsing="false" onAction="#showSearchWindow" text="Search" />
 			</items>
 		</MenuButton>
-<<<<<<< Updated upstream
-		<Separator layoutX="-3.0" layoutY="175.0" prefHeight="17.0" prefWidth="524.0" />
-		<Label layoutX="3.0" layoutY="3.0" prefHeight="39.0" prefWidth="75.0" text="recipeName:" />
-		<TextField fx:id="recipeName" layoutX="89.0" layoutY="10.0" prefHeight="25.0" prefWidth="172.0" promptText="input recipe name" />
-		<TextField fx:id="prepTime" layoutX="89.0" layoutY="51.0" prefHeight="25.0" prefWidth="172.0" promptText="input preptime(number min)" />
-		<Label layoutX="3.0" layoutY="44.0" prefHeight="39.0" prefWidth="75.0" text="prepTime:" />
-		<TextField fx:id="cookTime" layoutX="89.0" layoutY="93.0" prefHeight="25.0" prefWidth="172.0" promptText="input coktime(number min)" />
-		<TextField fx:id="category" layoutX="89.0" layoutY="134.0" prefHeight="25.0" prefWidth="172.0" promptText="stired/fried/boiled/bowled" />
-		<Label layoutX="3.0" layoutY="86.0" prefHeight="39.0" prefWidth="75.0" text="cookTime:" />
-		<Label layoutX="3.0" layoutY="127.0" prefHeight="39.0" prefWidth="75.0" text="category:" />
-		<ImageView fx:id="picture" fitHeight="129.0" fitWidth="218.0" layoutX="288.0" layoutY="51.0" pickOnBounds="true">
-=======
 		<Separator layoutX="5.0" layoutY="176.0" prefHeight="17.0" prefWidth="609.0" />
 		<Label layoutX="7.0" layoutY="4.0" prefHeight="39.0" prefWidth="124.0" text="Name of Recipe:" />
 		<TextField fx:id="recipeName" alignment="CENTER" layoutX="131.0" layoutY="10.0" prefHeight="30.0" prefWidth="154.0" />
@@ -57,7 +45,6 @@
 		<Label layoutX="6.0" layoutY="86.0" prefHeight="39.0" prefWidth="124.0" text="Cooking Time:" />
 		<Label layoutX="6.0" layoutY="127.0" prefHeight="39.0" prefWidth="75.0" text="Catagory: " />
 		<ImageView fx:id="picture" fitHeight="129.0" fitWidth="218.0" layoutX="357.0" layoutY="51.0" pickOnBounds="true">
->>>>>>> Stashed changes
 			<image>
 				<Image url="@../../resources/recipeSamplePicture.jpg" />
 			</image>
@@ -98,10 +85,7 @@
 				<Font size="9.0" />
 			</font>
 		</TextField>
-<<<<<<< Updated upstream
-=======
-      <ChoiceBox fx:id="categoryChoiceBox" layoutX="90.0" layoutY="134.0" prefHeight="30.0" prefWidth="195.0" />
->>>>>>> Stashed changes
+      <ChoiceBox fx:id="categoryChoiceBox" layoutX="87.0" layoutY="132.0" prefHeight="30.0" prefWidth="198.0" />
 
 	</children>
 </Pane>

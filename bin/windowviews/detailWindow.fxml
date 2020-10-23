@@ -36,18 +36,6 @@
 				<MenuItem fx:id="search" mnemonicParsing="false" onAction="#showSearchWindow" text="Search" />
 			</items>
 		</MenuButton>
-<<<<<<< Updated upstream
-		<Separator layoutX="-3.0" layoutY="175.0" prefHeight="17.0" prefWidth="524.0" />
-		<Label layoutX="3.0" layoutY="3.0" prefHeight="39.0" prefWidth="75.0" text="recipeName:" />
-		<TextField fx:id="recipeName_in_detail" layoutX="89.0" layoutY="10.0" prefHeight="25.0" prefWidth="172.0" promptText="input recipe name" />
-		<TextField fx:id="prepTime_in_detail" layoutX="89.0" layoutY="51.0" prefHeight="25.0" prefWidth="172.0" promptText="input preptime(number min)" />
-		<Label layoutX="3.0" layoutY="44.0" prefHeight="39.0" prefWidth="75.0" text="prepTime:" />
-		<TextField fx:id="cookTime_in_detail" layoutX="89.0" layoutY="93.0" prefHeight="25.0" prefWidth="172.0" promptText="input coktime(number min)" />
-		<TextField fx:id="category_in_detail" layoutX="89.0" layoutY="134.0" prefHeight="25.0" prefWidth="172.0" promptText="stired/fried/boiled/bowled" />
-		<Label layoutX="3.0" layoutY="86.0" prefHeight="39.0" prefWidth="75.0" text="cookTime:" />
-		<Label layoutX="3.0" layoutY="127.0" prefHeight="39.0" prefWidth="75.0" text="category:" />
-		<ImageView fx:id="picture_in_detail" fitHeight="129.0" fitWidth="218.0" layoutX="288.0" layoutY="51.0" pickOnBounds="true">
-=======
 		<Separator layoutX="-1.0" layoutY="175.0" prefHeight="17.0" prefWidth="588.0" />
 		<Label layoutX="6.0" layoutY="3.0" prefHeight="39.0" prefWidth="138.0" text="Name of Recipe:" />
 		<TextField fx:id="recipeName_in_detail" layoutX="132.0" layoutY="10.0" prefHeight="30.0" prefWidth="161.0" />
@@ -57,7 +45,6 @@
 		<Label layoutX="6.0" layoutY="86.0" prefHeight="39.0" prefWidth="116.0" text="Cooking Time:" />
 		<Label layoutX="6.0" layoutY="127.0" prefHeight="39.0" prefWidth="75.0" text="Category:" />
 		<ImageView fx:id="picture_in_detail" fitHeight="120.0" fitWidth="218.0" layoutX="328.0" layoutY="44.0" pickOnBounds="true">
->>>>>>> Stashed changes
 			<image>
 				<Image url="@../../resources/recipeSamplePicture.jpg" />
 			</image>
@@ -97,16 +84,10 @@
 				<Font size="9.0" />
 			</font>
 		</TextField>
-<<<<<<< Updated upstream
-      <Button fx:id="deleteConfirm" alignment="TOP_CENTER" layoutX="283.0" layoutY="581.0" mnemonicParsing="false" onAction="#actionResponseToDetailWindow" text="deleteRecipe" />
-      <Button fx:id="setServeAmountButton" layoutX="394.0" layoutY="185.0" mnemonicParsing="false" onAction="#actionResponseToDetailWindow" text="set" />
-      <TextField fx:id="serveAmount" layoutX="444.0" layoutY="185.0" prefHeight="25.0" prefWidth="116.0" text="1" />
-=======
       <Button fx:id="deleteConfirm" alignment="TOP_CENTER" layoutX="310.0" layoutY="581.0" mnemonicParsing="false" onAction="#actionResponseToDetailWindow" text="Delete the Recipe" />
       <Button fx:id="setServeAmountButton" layoutX="394.0" layoutY="185.0" mnemonicParsing="false" onAction="#actionResponseToDetailWindow" text="Set" />
       <TextField fx:id="serveAmount" alignment="CENTER" layoutX="444.0" layoutY="185.0" prefHeight="25.0" prefWidth="116.0" text="1" />
-      <ChoiceBox fx:id="categoryChoiceBox_in_detail" layoutX="85.0" layoutY="132.0" prefHeight="30.0" prefWidth="206.0" />
->>>>>>> Stashed changes
+      <ChoiceBox fx:id="categoryChoiceBox_in_detail" layoutX="79.0" layoutY="134.0" prefHeight="30.0" prefWidth="209.0" />
 
 	</children>
 </Pane>
