@@ -42,7 +42,6 @@
 		<TextField fx:id="prepTime_in_detail" layoutX="89.0" layoutY="51.0" prefHeight="25.0" prefWidth="172.0" promptText="input preptime(number min)" />
 		<Label layoutX="3.0" layoutY="44.0" prefHeight="39.0" prefWidth="75.0" text="prepTime:" />
 		<TextField fx:id="cookTime_in_detail" layoutX="89.0" layoutY="93.0" prefHeight="25.0" prefWidth="172.0" promptText="input coktime(number min)" />
-		<TextField fx:id="category_in_detail" layoutX="89.0" layoutY="134.0" prefHeight="25.0" prefWidth="172.0" promptText="stired/fried/boiled/bowled" />
 		<Label layoutX="3.0" layoutY="86.0" prefHeight="39.0" prefWidth="75.0" text="cookTime:" />
 		<Label layoutX="3.0" layoutY="127.0" prefHeight="39.0" prefWidth="75.0" text="category:" />
 		<ImageView fx:id="picture_in_detail" fitHeight="129.0" fitWidth="218.0" layoutX="288.0" layoutY="51.0" pickOnBounds="true">
@@ -88,6 +87,7 @@
       <Button fx:id="deleteConfirm" alignment="TOP_CENTER" layoutX="283.0" layoutY="581.0" mnemonicParsing="false" onAction="#actionResponseToDetailWindow" text="deleteRecipe" />
       <Button fx:id="setServeAmountButton" layoutX="394.0" layoutY="185.0" mnemonicParsing="false" onAction="#actionResponseToDetailWindow" text="set" />
       <TextField fx:id="serveAmount" layoutX="444.0" layoutY="185.0" prefHeight="25.0" prefWidth="116.0" text="1" />
+      <ChoiceBox fx:id="categoryChoiceBox_in_detail" layoutX="89.0" layoutY="134.0" prefHeight="25.0" prefWidth="172.0" />
 
 	</children>
 </Pane>

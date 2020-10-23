@@ -21,6 +21,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -76,7 +77,7 @@ public class WindowsController implements Initializable {
 	@FXML
 	private TextField cookTime;
 	@FXML
-	private TextField category;
+	private ChoiceBox<String> categoryChoiceBox = new ChoiceBox<>();
 	@FXML
 	private Button picChooser;
 	@FXML
@@ -122,7 +123,7 @@ public class WindowsController implements Initializable {
 	@FXML
 	private TextField cookTime_in_detail;
 	@FXML
-	private TextField category_in_detail;
+	private ChoiceBox<String> categoryChoiceBox_in_detail = new ChoiceBox<>();
 	@FXML
 	private Button picChooser_in_detail;
 	@FXML
@@ -180,6 +181,8 @@ public class WindowsController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// createWindow initialize
+		categoryChoiceBox.getItems().addAll(categires);
+		categoryChoiceBox.setValue("fried");
 		name.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("nameIng"));
 		description.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("descriptionIng"));
 		amount.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("totalAmountIng"));
@@ -188,6 +191,7 @@ public class WindowsController implements Initializable {
 		this.addDelButtonToTable("createWindow");
 
 		// detailWindow initialize
+		categoryChoiceBox_in_detail.getItems().addAll(categires);
 		name_in_detail.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("nameIng"));
 		description_in_detail.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("descriptionIng"));
 		amount_in_detail.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("totalAmountIng"));
@@ -335,7 +339,7 @@ public class WindowsController implements Initializable {
 		recipeName_in_detail.setText(searchedRecipeName);
 		prepTime_in_detail.setText(searchedRecipePrepTime);
 		cookTime_in_detail.setText(searchedRecipeCookTime);
-		category_in_detail.setText(searchedRecipeCategory);
+		categoryChoiceBox_in_detail.setValue(searchedRecipeCategory);
 		instruction_in_detail.setText(searchedRecipeInstruction);
 		try {
 			picture_in_detail.setImage(new Image(searchedRecipePic.getBinaryStream()));
@@ -382,7 +386,7 @@ public class WindowsController implements Initializable {
 			String stored_recipeName = recipeName_in_detail.getText();
 			String stored_prepareTime = prepTime_in_detail.getText();
 			String stored_cookTime = cookTime_in_detail.getText();
-			String stored_category = category_in_detail.getText();
+			String stored_category = categoryChoiceBox_in_detail.getValue();
 			String stored_instruction = instruction_in_detail.getText();
 			if (stored_category == "" || stored_cookTime == "" || stored_instruction == "" || stored_prepareTime == ""
 					|| stored_recipeName == "" || !isInteger(stored_cookTime) || !isInteger(stored_prepareTime)
@@ -480,7 +484,7 @@ public class WindowsController implements Initializable {
 			String stored_recipeName = recipeName.getText();
 			String stored_prepareTime = prepTime.getText();
 			String stored_cookTime = cookTime.getText();
-			String stored_category = category.getText();
+			String stored_category = categoryChoiceBox.getValue();
 			String stored_instruction = instruction.getText();
 			if (stored_category == "" || stored_cookTime == "" || stored_instruction == "" || stored_prepareTime == ""
 					|| stored_recipeName == "" || !isInteger(stored_cookTime) || !isInteger(stored_prepareTime)
