@@ -13,14 +13,14 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Pane prefHeight="614.0" prefWidth="571.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.WindowsController">
+<Pane prefHeight="622.0" prefWidth="609.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CreateWindowController">
 	<children>
-      <TableView fx:id="ingredientsTable" cache="true" editable="true" layoutX="282.0" layoutY="222.0" prefHeight="349.0" prefWidth="282.0" tableMenuButtonVisible="true">
+      <TableView fx:id="ingredientsTable" cache="true" editable="true" layoutX="282.0" layoutY="222.0" prefHeight="349.0" prefWidth="308.0" tableMenuButtonVisible="true">
          <columns>
-            <TableColumn fx:id="name" editable="false" prefWidth="54.0" text="nameCol" />
-            <TableColumn fx:id="description" editable="false" prefWidth="64.0" text="descripCol" />
-            <TableColumn fx:id="amount" editable="false" prefWidth="68.0" text="amountCol" />
-            <TableColumn fx:id="unit" editable="false" prefWidth="52.0" text="unitCol" />
+            <TableColumn fx:id="name" editable="false" prefWidth="54.0" text="Name" />
+            <TableColumn fx:id="description" editable="false" prefWidth="100.0" text="Description" />
+            <TableColumn fx:id="amount" editable="false" prefWidth="79.0" text="Amount" />
+            <TableColumn fx:id="unit" editable="false" minWidth="5.0" prefWidth="53.0" text="Unit" />
          </columns>
          <cursor>
             <Cursor fx:constant="DEFAULT" />
@@ -29,13 +29,14 @@
             <Blend mode="SCREEN" />
          </effect>
       </TableView>
-		<MenuButton contentDisplay="CENTER" layoutX="506.0" layoutY="10.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="goto" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+		<MenuButton contentDisplay="CENTER" layoutX="496.0" layoutY="10.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="Go To" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
 			<items>
-				<MenuItem fx:id="home" mnemonicParsing="false" onAction="#showMainWindow" text="home" />
-				<MenuItem fx:id="create" mnemonicParsing="false" onAction="#showCreateWindow" text="create" />
-				<MenuItem fx:id="search" mnemonicParsing="false" onAction="#showSearchWindow" text="search" />
+				<MenuItem fx:id="home" mnemonicParsing="false" onAction="#showMainWindow" text="Home" />
+				<MenuItem fx:id="create" mnemonicParsing="false" onAction="#showCreateWindow" text="Create" />
+				<MenuItem fx:id="search" mnemonicParsing="false" onAction="#showSearchWindow" text="Search" />
 			</items>
 		</MenuButton>
+<<<<<<< Updated upstream
 		<Separator layoutX="-3.0" layoutY="175.0" prefHeight="17.0" prefWidth="524.0" />
 		<Label layoutX="3.0" layoutY="3.0" prefHeight="39.0" prefWidth="75.0" text="recipeName:" />
 		<TextField fx:id="recipeName" layoutX="89.0" layoutY="10.0" prefHeight="25.0" prefWidth="172.0" promptText="input recipe name" />
@@ -46,46 +47,61 @@
 		<Label layoutX="3.0" layoutY="86.0" prefHeight="39.0" prefWidth="75.0" text="cookTime:" />
 		<Label layoutX="3.0" layoutY="127.0" prefHeight="39.0" prefWidth="75.0" text="category:" />
 		<ImageView fx:id="picture" fitHeight="129.0" fitWidth="218.0" layoutX="288.0" layoutY="51.0" pickOnBounds="true">
+=======
+		<Separator layoutX="5.0" layoutY="176.0" prefHeight="17.0" prefWidth="609.0" />
+		<Label layoutX="7.0" layoutY="4.0" prefHeight="39.0" prefWidth="124.0" text="Name of Recipe:" />
+		<TextField fx:id="recipeName" alignment="CENTER" layoutX="131.0" layoutY="10.0" prefHeight="30.0" prefWidth="154.0" />
+		<TextField fx:id="prepTime" alignment="CENTER" layoutX="137.0" layoutY="51.0" prefHeight="30.0" prefWidth="148.0" promptText="Minutes" />
+		<Label layoutX="6.0" layoutY="44.0" prefHeight="39.0" prefWidth="139.0" text="Preparation Time: " />
+		<TextField fx:id="cookTime" alignment="CENTER" layoutX="118.0" layoutY="93.0" prefHeight="30.0" prefWidth="167.0" promptText="Minutes" />
+		<Label layoutX="6.0" layoutY="86.0" prefHeight="39.0" prefWidth="124.0" text="Cooking Time:" />
+		<Label layoutX="6.0" layoutY="127.0" prefHeight="39.0" prefWidth="75.0" text="Catagory: " />
+		<ImageView fx:id="picture" fitHeight="129.0" fitWidth="218.0" layoutX="357.0" layoutY="51.0" pickOnBounds="true">
+>>>>>>> Stashed changes
 			<image>
 				<Image url="@../../resources/recipeSamplePicture.jpg" />
 			</image>
 		</ImageView>
-		<Separator layoutX="269.0" orientation="VERTICAL" prefHeight="183.0" prefWidth="5.0" />
-		<Button fx:id="picChooser" layoutX="288.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionResponseToCreateWindow" text="picChooser" />
-		<TextArea fx:id="instruction" layoutX="3.0" layoutY="222.0" prefHeight="349.0" prefWidth="254.0" />
-		<Label alignment="TOP_CENTER" layoutX="65.0" layoutY="184.0" prefHeight="17.0" prefWidth="129.0" text="instruction" textAlignment="JUSTIFY">
+		<Separator layoutX="313.0" layoutY="3.0" orientation="VERTICAL" prefHeight="181.0" prefWidth="14.0" />
+		<Button fx:id="picChooser" layoutX="350.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionResponseToCreateWindow" text="Choose Picture" />
+		<TextArea fx:id="instruction" layoutX="16.0" layoutY="222.0" prefHeight="349.0" prefWidth="254.0" />
+		<Label alignment="TOP_CENTER" layoutX="84.0" layoutY="192.0" prefHeight="17.0" prefWidth="129.0" text="Instruction" textAlignment="JUSTIFY">
 			<font>
 				<Font size="18.0" />
 			</font>
 		</Label>
-		<Button fx:id="createConfirm" alignment="TOP_CENTER" layoutX="19.0" layoutY="584.0" mnemonicParsing="false" onAction="#actionResponseToCreateWindow" text="create confirm" />
-		<Button fx:id="createCancle" layoutX="148.0" layoutY="584.0" mnemonicParsing="false" onAction="#actionResponseToCreateWindow" prefHeight="25.0" prefWidth="92.0" text="create cancle" />
-		<Label alignment="TOP_CENTER" layoutX="317.0" layoutY="184.0" prefHeight="17.0" prefWidth="129.0" text="ingredients" textAlignment="JUSTIFY">
+		<Button fx:id="createConfirm" alignment="TOP_CENTER" layoutX="34.0" layoutY="584.0" mnemonicParsing="false" onAction="#actionResponseToCreateWindow" text="Confirm" />
+		<Button fx:id="createCancle" layoutX="156.0" layoutY="584.0" mnemonicParsing="false" onAction="#actionResponseToCreateWindow" prefHeight="25.0" prefWidth="92.0" text="Cancel" />
+		<Label alignment="TOP_CENTER" layoutX="357.0" layoutY="192.0" prefHeight="17.0" prefWidth="129.0" text="Ingredients" textAlignment="JUSTIFY">
 			<font>
 				<Font size="18.0" />
 			</font>
 		</Label>
-		<Button fx:id="addIngredientButton" layoutX="509.0" layoutY="584.0" mnemonicParsing="false" onAction="#actionResponseToCreateWindow" text="add" />
-		<TextField fx:id="nameOfIngredient" layoutX="288.0" layoutY="584.0" prefHeight="25.0" prefWidth="57.0" promptText="ingrName">
+		<Button fx:id="addIngredientButton" layoutX="533.0" layoutY="582.0" mnemonicParsing="false" onAction="#actionResponseToCreateWindow" text="Add" />
+		<TextField fx:id="nameOfIngredient" alignment="CENTER" layoutX="288.0" layoutY="584.0" prefHeight="25.0" prefWidth="50.0" promptText="Name">
 			<font>
 				<Font size="9.0" />
 			</font>
 		</TextField>
-		<TextField fx:id="descriptionOfingredient" layoutX="350.0" layoutY="584.0" prefHeight="25.0" prefWidth="57.0" promptText="description">
+		<TextField fx:id="descriptionOfingredient" alignment="CENTER" layoutX="350.0" layoutY="584.0" prefHeight="25.0" prefWidth="67.0" promptText="Description">
 			<font>
 				<Font size="9.0" />
 			</font>
 		</TextField>
-		<TextField fx:id="amountOfIngredient" layoutX="416.0" layoutY="584.0" prefHeight="25.0" prefWidth="50.0" promptText="amount">
+		<TextField fx:id="amountOfIngredient" alignment="CENTER" layoutX="426.0" layoutY="584.0" prefHeight="25.0" prefWidth="50.0" promptText="Amount">
 			<font>
 				<Font size="9.0" />
 			</font>
 		</TextField>
-		<TextField fx:id="unitOfIngredient" layoutX="471.0" layoutY="584.0" prefHeight="25.0" prefWidth="36.0" promptText="unit">
+		<TextField fx:id="unitOfIngredient" alignment="CENTER" layoutX="486.0" layoutY="585.0" prefHeight="25.0" prefWidth="36.0" promptText="Unit">
 			<font>
 				<Font size="9.0" />
 			</font>
 		</TextField>
+<<<<<<< Updated upstream
+=======
+      <ChoiceBox fx:id="categoryChoiceBox" layoutX="90.0" layoutY="134.0" prefHeight="30.0" prefWidth="195.0" />
+>>>>>>> Stashed changes
 
 	</children>
 </Pane>

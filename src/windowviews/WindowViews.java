@@ -1,9 +1,16 @@
 package windowviews;
 
+<<<<<<< Updated upstream
 import java.net.URL;
+=======
+import java.util.ArrayList;
+>>>>>>> Stashed changes
 
-import controller.WindowsController;
-import entity.Recipe;
+import controller.CategoryWindowController;
+import controller.CreateWindowController;
+import controller.DetailWindowController;
+import controller.MainWindowController;
+import controller.SearchWindowController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import model.Recipe;
 
 /**
  * WindowViews class, use respond fxml page to show relative window
@@ -21,10 +29,19 @@ import javafx.stage.Stage;
 
 public class WindowViews extends Application {
 	private Stage primaryStage;
-	private WindowsController windowController;
+	private MainWindowController mainWindowController;
+	private CategoryWindowController categoryWindowController;
+	private CreateWindowController createWindowController;
+	private DetailWindowController detailWindowController;
+	private SearchWindowController searchWindowController;
 
 	@Override
 	public void start(Stage primaryStage) {
+		this.mainWindowController = new MainWindowController();
+		this.categoryWindowController = new CategoryWindowController();
+		this.createWindowController = new CreateWindowController();
+		this.detailWindowController = new DetailWindowController();
+		this.searchWindowController = new SearchWindowController();
 		this.primaryStage = primaryStage;
 		primaryStage.setTitle("cookbook");
 		setMainWindow();
@@ -35,45 +52,78 @@ public class WindowViews extends Application {
 	}
 	
 	public void setMainWindow() {
-		setAndShowWindows("mainWindow.fxml");
-	}
-
-	public void setSearchWindow() {
-		setAndShowWindows("searchWindow.fxml");
-	}
-
-	public void setDetailWindow(Recipe searchedRecipe) {
-		setAndShowWindows("detailWindow.fxml");
-		windowController.setDataAtDetailWindow(searchedRecipe);
-	}
-
-	public void setRecipesPane() {
-		setAndShowWindows("recipeWindow.fxml");
-	}
-
-	public void setCategoryWindow() {
-		setAndShowWindows("categoryWindow.fxml");
-	}
-
-	public void setCreateWindow() {
-		setAndShowWindows("createWindow.fxml");
-	}
-
-	public void setAndShowWindows(String window) {
 		try {
-			URL url = getClass().getResource(window);
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(url);
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("mainWindow.fxml"));
 			Parent root = loader.load();
 			primaryStage.setScene(new Scene(root));
-			windowController = loader.getController();
-			windowController.setView(this);
 			primaryStage.show();
+			mainWindowController = loader.getController();
+			mainWindowController.setView(this);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
+	public void setSearchWindow() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("searchWindow.fxml"));
+			Parent root = loader.load();
+			primaryStage.setScene(new Scene(root));
+			primaryStage.show();
+			searchWindowController = loader.getController();
+			searchWindowController.setView(this);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void setDetailWindow(Recipe searchedRecipe) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("detailWindow.fxml"));
+			Parent root = loader.load();
+			primaryStage.setScene(new Scene(root));
+			primaryStage.show();
+			detailWindowController = loader.getController();
+			detailWindowController.setView(this);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		detailWindowController.setDataAtDetailWindow(searchedRecipe);
+	}
+
+
+<<<<<<< Updated upstream
+	public void setCategoryWindow() {
+		setAndShowWindows("categoryWindow.fxml");
+=======
+	public void setCategoryWindow(ArrayList<Recipe> stored_recipes) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("categoryWindow.fxml"));
+			Parent root = loader.load();
+			primaryStage.setScene(new Scene(root));
+			primaryStage.show();
+			categoryWindowController = loader.getController();
+			categoryWindowController.setView(this);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		categoryWindowController.setDataAtCateGoryWindow(stored_recipes);
+>>>>>>> Stashed changes
+	}
+
+	public void setCreateWindow() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("createWindow.fxml"));
+			Parent root = loader.load();
+			primaryStage.setScene(new Scene(root));
+			primaryStage.show();
+			createWindowController = loader.getController();
+			createWindowController.setView(this);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void alertWindow() {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Warning");

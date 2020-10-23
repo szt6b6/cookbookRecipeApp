@@ -1,4 +1,4 @@
-package entity;
+package model;
 
 public class Ingredient {
 	private String  nameIng;
@@ -64,13 +64,4 @@ public class Ingredient {
 	public void setTotalAmountIng(String totalAmountIng) {
 		this.totalAmountIng = totalAmountIng;
 	}
-
-	public void setFieldValue(Double newValue) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-	
 }

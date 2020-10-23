@@ -12,8 +12,6 @@ import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
 
-import entity.Ingredient;
-import entity.Recipe;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
@@ -32,7 +30,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
-import model.Model;
+import model.Ingredient;
+import model.Recipe;
 import windowviews.WindowViews;
 
 /**
@@ -41,16 +40,15 @@ import windowviews.WindowViews;
  * @author szt
  *
  */
-public class WindowsController implements Initializable {
+public class DetailWindowController implements Initializable {
 
 	private WindowViews windowsView;
-	private Model model;
 	private DatabaseController databaseController;
-	private ObservableList<Ingredient> ingredients = FXCollections.observableArrayList();
 	private ObservableList<Ingredient> ingredients_in_detail = FXCollections.observableArrayList();
 	private final ArrayList<String> categires = new ArrayList<>(
 			FXCollections.observableArrayList("stired", "boiled", "fried", "stewed", "baked"));
 	private String recipeNameToBeUpdate = ""; // used for looking for recipe and update it
+	private ArrayList<Ingredient> neededToAddIngredientInDetailWindow = new ArrayList<>();
 	private ArrayList<Ingredient> neededToDelIngredientInDetailWindow = new ArrayList<>(); // used to store the deleted
 																							// ingredient by clinking
 																							// del in detailWindow
@@ -80,6 +78,7 @@ public class WindowsController implements Initializable {
 	private MenuItem search;
 
 	/**
+<<<<<<< Updated upstream:src/controller/WindowsController.java
 	 * createWindow GUI items
 	 */
 	@FXML
@@ -122,6 +121,8 @@ public class WindowsController implements Initializable {
 	private TableColumn<Ingredient, String> unit = new TableColumn<Ingredient, String>();
 
 	/**
+=======
+>>>>>>> Stashed changes:src/controller/DetailWindowController.java
 	 * detailWindow GUI items
 	 */
 	@FXML
@@ -167,6 +168,7 @@ public class WindowsController implements Initializable {
 	@FXML
 	private TableColumn<Ingredient, String> unit_in_detail = new TableColumn<Ingredient, String>();
 
+<<<<<<< Updated upstream:src/controller/WindowsController.java
 	/**
 	 * searchWindow GUI items
 	 */
@@ -176,12 +178,15 @@ public class WindowsController implements Initializable {
 	private Button searchRecipeButton;
 
 	public WindowsController() {
+=======
+	public DetailWindowController() {
+>>>>>>> Stashed changes:src/controller/DetailWindowController.java
 		databaseController = new DatabaseController();
-		model = new Model();
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+<<<<<<< Updated upstream:src/controller/WindowsController.java
 		// createWindow initialize
 		name.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("nameIng"));
 		description.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("descriptionIng"));
@@ -190,16 +195,25 @@ public class WindowsController implements Initializable {
 		ingredientsTable.setItems(ingredients);
 		this.addButtonToTable("createWindow");
 
+=======
+>>>>>>> Stashed changes:src/controller/DetailWindowController.java
 		// detailWindow initialize
 		name_in_detail.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("nameIng"));
 		description_in_detail.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("descriptionIng"));
 		amount_in_detail.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("totalAmountIng"));
 		unit_in_detail.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("unitIng"));
 		ingredientsTable_in_detail.setItems(ingredients_in_detail);
+<<<<<<< Updated upstream:src/controller/WindowsController.java
 		this.addButtonToTable("detailWindow");
 	}
 
 	private void addButtonToTable(String fromWhichWindow) {
+=======
+		this.addDelButtonToTable();
+	}
+
+	private void addDelButtonToTable() {
+>>>>>>> Stashed changes:src/controller/DetailWindowController.java
 		TableColumn<Ingredient, String> colBtn = new TableColumn<>();
 
 		Callback<TableColumn<Ingredient, String>, TableCell<Ingredient, String>> cellFactory = new Callback<TableColumn<Ingredient, String>, TableCell<Ingredient, String>>() {
@@ -210,6 +224,7 @@ public class WindowsController implements Initializable {
 					{
 						btn.setOnAction((ActionEvent event) -> {
 							Ingredient data = getTableView().getItems().get(getIndex());
+<<<<<<< Updated upstream:src/controller/WindowsController.java
 							if(fromWhichWindow == "detailWindow") {
 								neededToDelIngredientInDetailWindow.add(data);//used to store deleted ingredients by clicking del button to update
 							ingredients_in_detail.remove(data);
@@ -248,12 +263,39 @@ public class WindowsController implements Initializable {
 
 	public void showRecipe(ActionEvent event) {
 		windowsView.setRecipesPane();
+=======
+							neededToDelIngredientInDetailWindow.add(data);// used to store deleted ingredients by
+																			// clicking del button to update
+							ingredients_in_detail.remove(data);
+							ingredientsTable_in_detail.refresh();
+
+						});
+					}
+
+					@Override
+					public void updateItem(String item, boolean empty) {
+						super.updateItem(item, empty);
+						if (empty) {
+							setGraphic(null);
+						} else {
+							setGraphic(btn);
+						}
+					}
+				};
+				return cell;
+			}
+		};
+
+		colBtn.setCellFactory(cellFactory);
+		ingredientsTable_in_detail.getColumns().add(colBtn);
+>>>>>>> Stashed changes:src/controller/DetailWindowController.java
 	}
 
 	public void showMainWindow(ActionEvent event) {
 		windowsView.setMainWindow();
 	}
 
+<<<<<<< Updated upstream:src/controller/WindowsController.java
 	public void actionResponseToMainWindow(ActionEvent event) {
 		Button button = (Button) event.getTarget();
 		if (button == b1) {
@@ -289,6 +331,14 @@ public class WindowsController implements Initializable {
 			return;
 		}
 		windowsView.setDetailWindow(searchedRecipe);
+=======
+	public void showSearchWindow() {
+		windowsView.setSearchWindow();
+	}
+	
+	public void showCreateWindow() {
+		windowsView.setCreateWindow();
+>>>>>>> Stashed changes:src/controller/DetailWindowController.java
 	}
 
 	public void setDataAtDetailWindow(Recipe searchedRecipe) {
@@ -337,11 +387,13 @@ public class WindowsController implements Initializable {
 			String stored_description = descriptionOfingredient_in_detail.getText();
 			String stored_amount = amountOfIngredient_in_detail.getText();
 			String stored_unit = unitOfIngredient_in_detail.getText();
-			int stored_serveAmount = Integer.valueOf(serveAmount.getText());
-			if (stored_amount.length() != 0 && stored_description.length() != 0 && stored_unit.length() != 0
-					&& stored_ingredientName.length() != 0 && isInteger(stored_amount) && stored_serveAmount > 0) {
-				ingredients_in_detail.add(new Ingredient(stored_ingredientName, stored_description, stored_amount,
-						stored_unit, stored_serveAmount));
+			if (stored_description.length() != 0 && stored_unit.length() != 0
+					&& stored_ingredientName.length() != 0 && isInteger(stored_amount) && isInteger(serveAmount.getText())) {
+				int stored_serveAmount = Integer.valueOf(serveAmount.getText());
+				Ingredient addedIngredient = new Ingredient(stored_ingredientName, stored_description, stored_amount,
+						stored_unit, stored_serveAmount);
+				ingredients_in_detail.add(addedIngredient);
+				neededToAddIngredientInDetailWindow.add(addedIngredient);
 			} else {
 				windowsView.alertWindow();
 			}
@@ -370,8 +422,15 @@ public class WindowsController implements Initializable {
 				stored_recipe = new Recipe(stored_recipeName, stored_prepareTime, stored_cookTime, stored_picture,
 						stored_instruction, stored_category);
 				stored_recipe.setIngredients(new ArrayList<Ingredient>(ingredientsTable_in_detail.getItems()));
+<<<<<<< Updated upstream:src/controller/WindowsController.java
 				if (databaseController.updateRecipe(stored_recipe, recipeNameToBeUpdate, neededToDelIngredientInDetailWindow)) {
+=======
+				if (databaseController.updateRecipe(stored_recipe, recipeNameToBeUpdate,
+						neededToDelIngredientInDetailWindow, neededToAddIngredientInDetailWindow)) {
+>>>>>>> Stashed changes:src/controller/DetailWindowController.java
 					ingredients_in_detail.clear();
+					setDataAtDetailWindow(stored_recipe);
+					recipeNameToBeUpdate = stored_recipe.getName();
 					windowsView.showUpdataSuccessDialog();
 				} else {
 					windowsView.showUpdateErrorDialog();
@@ -380,12 +439,14 @@ public class WindowsController implements Initializable {
 				e.printStackTrace();
 			}
 			neededToDelIngredientInDetailWindow.clear();
+			neededToAddIngredientInDetailWindow.clear();
 		}
 
 		if (pressedButton == deleteConfirm) {
 			String recipeNameToDelete = recipeName_in_detail.getText();
 			if (databaseController.deleteRecipe(recipeNameToDelete)) {
 				neededToDelIngredientInDetailWindow.clear();
+				neededToAddIngredientInDetailWindow.clear();
 				windowsView.showDeleteSuccessfulDialog(recipeNameToDelete);
 				windowsView.setDetailWindow(null);
 			}
@@ -411,6 +472,7 @@ public class WindowsController implements Initializable {
 
 	}
 
+<<<<<<< Updated upstream:src/controller/WindowsController.java
 	public void showCreateWindow() {
 		windowsView.setCreateWindow();
 	}
@@ -495,6 +557,8 @@ public class WindowsController implements Initializable {
 		}
 	}
 
+=======
+>>>>>>> Stashed changes:src/controller/DetailWindowController.java
 	public static boolean isInteger(String str) {
 		try {
 			@SuppressWarnings("unused")
