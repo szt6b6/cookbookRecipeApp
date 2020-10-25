@@ -12,7 +12,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Pane prefHeight="614.0" prefWidth="571.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainWindowController">
+<Pane prefHeight="614.0" prefWidth="571.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainWindowController">
 	<children>
 		<MenuButton contentDisplay="CENTER" layoutX="482.0" layoutY="31.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="Go to" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
 			<items>

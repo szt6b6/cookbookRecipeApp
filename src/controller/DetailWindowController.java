@@ -8,6 +8,7 @@ import java.net.URL;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
@@ -19,6 +20,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableCell;
@@ -36,7 +38,8 @@ import model.Recipe;
 import windowviews.WindowViews;
 
 /**
- * WindowController class, use for control the switching of windows
+ * Controller of the detailWindow, acts as an intermediary between detailWindow
+ * and model, defines what should happen on user interaction on detailWindow.
  * 
  * @author szt
  *
@@ -126,6 +129,9 @@ public class DetailWindowController implements Initializable {
 		this.addDelButtonToTable();
 	}
 
+	/**
+	 * Add the del button in the table of Ingredients.
+	 */
 	private void addDelButtonToTable() {
 		TableColumn<Ingredient, String> colBtn = new TableColumn<>();
 
@@ -163,18 +169,34 @@ public class DetailWindowController implements Initializable {
 		ingredientsTable_in_detail.getColumns().add(colBtn);
 	}
 
+	/**
+	 * Show mainWindow.
+	 * 
+	 * @param event, user's interaction with GUI
+	 */
 	public void showMainWindow(ActionEvent event) {
 		windowsView.setMainWindow();
 	}
 
+	/**
+	 * Show searchWindow.
+	 */
 	public void showSearchWindow() {
 		windowsView.setSearchWindow();
 	}
-	
+
+	/**
+	 * Show createWindow.
+	 */
 	public void showCreateWindow() {
 		windowsView.setCreateWindow();
 	}
 
+	/**
+	 * Set the data of a recipe in the detailWindow.
+	 * 
+	 * @param searchedRecipe, the recipe that is chosen
+	 */
 	public void setDataAtDetailWindow(Recipe searchedRecipe) {
 		if (searchedRecipe == null) {
 			return;
@@ -202,7 +224,11 @@ public class DetailWindowController implements Initializable {
 		ingredients_in_detail.addAll(searchedRecipeIngredients);
 	}
 
-	// update and delete action at this function
+	/**
+	 * Control the detailWindow reacting with the action by the user.
+	 * 
+	 * @param event, user's interaction with GUI.
+	 */
 	public void actionResponseToDetailWindow(ActionEvent event) {
 		Button pressedButton = (Button) event.getTarget();
 		if (pressedButton == picChooser_in_detail) {
@@ -224,8 +250,8 @@ public class DetailWindowController implements Initializable {
 			String stored_description = descriptionOfingredient_in_detail.getText();
 			String stored_amount = amountOfIngredient_in_detail.getText();
 			String stored_unit = unitOfIngredient_in_detail.getText();
-			if (stored_description.length() != 0 && stored_unit.length() != 0
-					&& stored_ingredientName.length() != 0 && isInteger(stored_amount) && isInteger(serveAmount.getText())) {
+			if (stored_description.length() != 0 && stored_unit.length() != 0 && stored_ingredientName.length() != 0
+					&& isInteger(stored_amount) && isInteger(serveAmount.getText())) {
 				int stored_serveAmount = Integer.valueOf(serveAmount.getText());
 				Ingredient addedIngredient = new Ingredient(stored_ingredientName, stored_description, stored_amount,
 						stored_unit, stored_serveAmount);
@@ -249,43 +275,51 @@ public class DetailWindowController implements Initializable {
 				windowsView.alertWindow();
 				return;
 			}
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			BufferedImage bImage = SwingFXUtils.fromFXImage(picture_in_detail.getImage(), null);
-			Recipe stored_recipe;
-			try {
-				ImageIO.write(bImage, "png", baos);
-				Blob stored_picture = databaseController.getConnection().createBlob();
-				stored_picture.setBytes(1, baos.toByteArray());
-				stored_recipe = new Recipe(stored_recipeName, stored_prepareTime, stored_cookTime, stored_picture,
-						stored_instruction, stored_category);
-				stored_recipe.setIngredients(new ArrayList<Ingredient>(ingredientsTable_in_detail.getItems()));
-				if (databaseController.updateRecipe(stored_recipe, recipeNameToBeUpdate,
-						neededToDelIngredientInDetailWindow, neededToAddIngredientInDetailWindow)) {
-					ingredients_in_detail.clear();
-					setDataAtDetailWindow(stored_recipe);
-					recipeNameToBeUpdate = stored_recipe.getName();
-					windowsView.showUpdataSuccessDialog();
-				} else {
-					windowsView.showUpdateErrorDialog();
+
+			Optional<ButtonType> result = windowsView.showUpdateConfirmationDialog();
+			if (result.isPresent() && result.get() == ButtonType.OK) {
+
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				BufferedImage bImage = SwingFXUtils.fromFXImage(picture_in_detail.getImage(), null);
+				Recipe stored_recipe;
+				try {
+					ImageIO.write(bImage, "png", baos);
+					Blob stored_picture = databaseController.getConnection().createBlob();
+					stored_picture.setBytes(1, baos.toByteArray());
+					stored_recipe = new Recipe(stored_recipeName, stored_prepareTime, stored_cookTime, stored_picture,
+							stored_instruction, stored_category);
+					stored_recipe.setIngredients(new ArrayList<Ingredient>(ingredientsTable_in_detail.getItems()));
+					if (databaseController.updateRecipe(stored_recipe, recipeNameToBeUpdate,
+							neededToDelIngredientInDetailWindow, neededToAddIngredientInDetailWindow)) {
+						ingredients_in_detail.clear();
+						setDataAtDetailWindow(stored_recipe);
+						recipeNameToBeUpdate = stored_recipe.getName();
+						windowsView.showUpdateSuccessDialog();
+					} else {
+						windowsView.showUpdateErrorDialog();
+					}
+				} catch (IOException | SQLException e) {
+					e.printStackTrace();
 				}
-			} catch (IOException | SQLException e) {
-				e.printStackTrace();
 			}
 			neededToDelIngredientInDetailWindow.clear();
 			neededToAddIngredientInDetailWindow.clear();
 		}
 
 		if (pressedButton == deleteConfirm) {
-			String recipeNameToDelete = recipeName_in_detail.getText();
-			if (databaseController.deleteRecipe(recipeNameToDelete)) {
-				neededToDelIngredientInDetailWindow.clear();
-				neededToAddIngredientInDetailWindow.clear();
-				windowsView.showDeleteSuccessfulDialog(recipeNameToDelete);
-				windowsView.setDetailWindow(null);
-			}
+			Optional<ButtonType> result = windowsView.showDeleteConfirmationDialog();
+			if (result.isPresent() && result.get() == ButtonType.OK) {
+				String recipeNameToDelete = recipeName_in_detail.getText();
+				if (databaseController.deleteRecipe(recipeNameToDelete)) {
+					neededToDelIngredientInDetailWindow.clear();
+					neededToAddIngredientInDetailWindow.clear();
+					windowsView.showDeleteSuccessfulDialog(recipeNameToDelete);
+					windowsView.setDetailWindow(null);
+				}
 
-			else
-				windowsView.showDeleteFailedDialog(recipeNameToDelete);
+				else
+					windowsView.showDeleteFailedDialog(recipeNameToDelete);
+			}
 		}
 
 		if (pressedButton == setServeAmountButton) {
@@ -303,6 +337,12 @@ public class DetailWindowController implements Initializable {
 		}
 	}
 
+	/**
+	 * Indentify whether the can be a string.
+	 * 
+	 * @param str, the input string
+	 * @return true or false
+	 */
 	public static boolean isInteger(String str) {
 		try {
 			@SuppressWarnings("unused")
@@ -313,6 +353,11 @@ public class DetailWindowController implements Initializable {
 		return true;
 	}
 
+	/**
+	 * Bind the detailWindowController to the windowViews.
+	 * 
+	 * @param windowViews, windowViews
+	 */
 	public void setView(WindowViews windowViews) {
 		this.windowsView = windowViews;
 	}

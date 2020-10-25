@@ -8,6 +8,7 @@ import java.net.URL;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
@@ -19,6 +20,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableCell;
@@ -36,7 +38,7 @@ import model.Recipe;
 import windowviews.WindowViews;
 
 /**
- * WindowController class, use for control the switching of windows
+ * CreateWindowController class, used for control user's action on create recipe window
  * 
  * @author szt
  *
@@ -45,10 +47,15 @@ public class CreateWindowController implements Initializable {
 
 	private WindowViews windowsView;
 	private DatabaseController databaseController;
+	/**
+	 * show ingredients on table
+	 */
 	private ObservableList<Ingredient> ingredients = FXCollections.observableArrayList();
+	/**
+	 * categories of recipes
+	 */
 	private final ArrayList<String> categires = new ArrayList<>(
 			FXCollections.observableArrayList("stired", "boiled", "fried", "stewed", "baked"));
-
 
 	/**
 	 * all window GUI items
@@ -91,6 +98,7 @@ public class CreateWindowController implements Initializable {
 	private TextField unitOfIngredient;
 	@FXML
 	private Button addIngredientButton;
+	//need to be initialized otherwise we get error
 	@FXML
 	private TableView<Ingredient> ingredientsTable = new TableView<Ingredient>();
 	@FXML
@@ -101,7 +109,6 @@ public class CreateWindowController implements Initializable {
 	private TableColumn<Ingredient, String> amount = new TableColumn<Ingredient, String>();
 	@FXML
 	private TableColumn<Ingredient, String> unit = new TableColumn<Ingredient, String>();
-	
 
 	public CreateWindowController() {
 		databaseController = new DatabaseController();
@@ -111,7 +118,10 @@ public class CreateWindowController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		// createWindow initialize
 		categoryChoiceBox.getItems().addAll(categires);
-		categoryChoiceBox.setValue("fried");
+		categoryChoiceBox.setValue("fried");//default value
+		/**
+		 * set reflection of table columns with methods in ingredient entity
+		 */
 		name.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("nameIng"));
 		description.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("descriptionIng"));
 		amount.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("totalAmountIng"));
@@ -120,6 +130,9 @@ public class CreateWindowController implements Initializable {
 		this.addDelButtonToTable();
 	}
 
+	/**
+	 * add delete button to the table, used for delete ingredients the user input falsely
+	 */
 	private void addDelButtonToTable() {
 		TableColumn<Ingredient, String> colBtn = new TableColumn<>();
 
@@ -155,20 +168,31 @@ public class CreateWindowController implements Initializable {
 		ingredientsTable.getColumns().add(colBtn);
 	}
 
-	public void showMainWindow(ActionEvent event) {
+	/**
+	 * show main window
+	 */
+	public void showMainWindow() {
 		windowsView.setMainWindow();
 	}
 
-
+	/**
+	 * show search window
+	 */
 	public void showSearchWindow() {
 		windowsView.setSearchWindow();
 	}
 
+	/**
+	 * show create window
+	 */
 	public void showCreateWindow() {
 		windowsView.setCreateWindow();
 	}
 
-
+	/**
+	 * response to user's action on create window
+	 * @param event represents which button the user clicked on the cerate window
+	 */
 	public void actionResponseToCreateWindow(ActionEvent event) {
 		Button pressedButton = (Button) event.getTarget();
 		if (pressedButton == picChooser) {
@@ -215,40 +239,49 @@ public class CreateWindowController implements Initializable {
 				return;
 			}
 //			Image picture = new Image(recipeResult.getBlob("picture").getBinaryStream()); //灏咮lob鍥剧墖杞寲涓簀avafx Image
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			BufferedImage bImage = SwingFXUtils.fromFXImage(picture.getImage(), null);
-			Recipe stored_recipe;
-			try {
-				ImageIO.write(bImage, "png", baos);
-				Blob stored_picture = databaseController.getConnection().createBlob();
-				stored_picture.setBytes(1, baos.toByteArray());
-				stored_recipe = new Recipe(stored_recipeName, stored_prepareTime, stored_cookTime, stored_picture,
-						stored_instruction, stored_category);
-				stored_recipe.setIngredients(new ArrayList<Ingredient>(ingredientsTable.getItems()));
-				ingredients.removeAll(ingredients);
-				if (databaseController.createRecipe(stored_recipe)) {
-					ingredients.clear();
-					windowsView.showCreateSuccessDialog();
-				} else {
-					windowsView.showCreateErrorDialog();
+			Optional<ButtonType> result = windowsView.showCreateConfirmationDialog();
+			if (result.isPresent() && result.get() == ButtonType.OK) {
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				BufferedImage bImage = SwingFXUtils.fromFXImage(picture.getImage(), null);
+				Recipe stored_recipe;
+				try {
+					ImageIO.write(bImage, "png", baos);
+					Blob stored_picture = databaseController.getConnection().createBlob();
+					stored_picture.setBytes(1, baos.toByteArray());
+					stored_recipe = new Recipe(stored_recipeName, stored_prepareTime, stored_cookTime, stored_picture,
+							stored_instruction, stored_category);
+					stored_recipe.setIngredients(new ArrayList<Ingredient>(ingredientsTable.getItems()));
+					ingredients.removeAll(ingredients);
+					if (databaseController.createRecipe(stored_recipe)) {
+						ingredients.clear();
+						windowsView.showCreateSuccessDialog();
+					} else {
+						windowsView.showCreateErrorDialog();
+					}
+				} catch (IOException | SQLException e) {
+					e.printStackTrace();
 				}
-			} catch (IOException | SQLException e) {
-				e.printStackTrace();
 			}
-
 		}
 
 		if (pressedButton == createCancle) {
-			try {
-				ingredients.clear();
-				this.showCreateWindow();
-			} catch (NullPointerException e) {
-				// cancle select picture and do nothing
+			Optional<ButtonType> result = windowsView.showClearConfirmationDialog();
+			if (result.isPresent() && result.get() == ButtonType.OK) {
+				try {
+					ingredients.clear();
+					this.showCreateWindow();
+				} catch (NullPointerException e) {
+					// cancle select picture and do nothing
+				}
 			}
-
 		}
 	}
 
+	/**
+	 * judge prepTime field and cookTime field and amount field are integer or not
+	 * @param str the string to be judged
+	 * @return yes or no about this string is integer
+	 */
 	public static boolean isInteger(String str) {
 		try {
 			new Integer(str).toString();
@@ -258,6 +291,10 @@ public class CreateWindowController implements Initializable {
 		return true;
 	}
 
+	/**
+	 * set view method
+	 * @param windowViews view
+	 */
 	public void setView(WindowViews windowViews) {
 		this.windowsView = windowViews;
 	}

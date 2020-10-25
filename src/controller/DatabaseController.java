@@ -13,20 +13,20 @@ import model.Ingredient;
 import model.Recipe;
 
 /**
- * DatabaseController class, deliver data from database to model
+ * DatabaseController class, its job is to deliver data. Window controllers use
+ * database controller to get data from database or change data in the database
  * 
  * @author szt
  *
  */
 public class DatabaseController {
+
 	private Connection connection;
 
-	public Connection getConnection() {
-		return connection;
-	}
-
+	/**
+	 * constructor, initialize the connection to the database
+	 */
 	public DatabaseController() {
-
 		try {
 			connection = DriverManager.getConnection(
 					"jdbc:mysql://127.0.0.1:3306/cookbookrecipes?serverTimezone=UTC&characterEncoding=UTF-8", "root",
@@ -36,6 +36,21 @@ public class DatabaseController {
 		}
 	}
 
+	/**
+	 * get connection method, used to create Blob type to store image object
+	 * 
+	 * @return connection
+	 */
+	public Connection getConnection() {
+		return connection;
+	}
+
+	/**
+	 * create recipe method, create recipe and its ingredients in database
+	 * 
+	 * @param recipe recipe's entity
+	 * @return true or false of creating result
+	 */
 	public boolean createRecipe(Recipe recipe) {
 		PreparedStatement statement;
 		try {
@@ -65,8 +80,20 @@ public class DatabaseController {
 		return true;
 	}
 
+	/**
+	 * update recipe method, to update recipe in the database according to received
+	 * parameters
+	 * 
+	 * @param recipe                              recipe data used to update recipe
+	 * @param recipeNameToBeUpdate                indicate which recipe is going to
+	 *                                            be updated
+	 * @param neededToDelIngredientInDetailWindow deleted ingredients in table
+	 * @param neededToAddIngredientInDetailWindow added ingredients in table
+	 * @return true or false of updating result
+	 */
 	public boolean updateRecipe(Recipe recipe, String recipeNameToBeUpdate,
-			ArrayList<Ingredient> neededToDelIngredientInDetailWindow, ArrayList<Ingredient> neededToAddIngredientInDetailWindow) {
+			ArrayList<Ingredient> neededToDelIngredientInDetailWindow,
+			ArrayList<Ingredient> neededToAddIngredientInDetailWindow) {
 		PreparedStatement statement;
 		try {
 			statement = connection.prepareStatement(
@@ -106,6 +133,12 @@ public class DatabaseController {
 		return true;
 	}
 
+	/**
+	 * delete recipe method according to recipeName parameter
+	 * 
+	 * @param recipeName indicates which recipe is needed to be deleted
+	 * @return true or false of the deleting result
+	 */
 	public boolean deleteRecipe(String recipeName) {
 		Statement statement;
 		try {
@@ -122,6 +155,13 @@ public class DatabaseController {
 		return true;
 	}
 
+	/**
+	 * search recipe method according to given parameter recipeName
+	 * 
+	 * @param recipeName the string value of recipe name used to search recipe in
+	 *                   database
+	 * @return searched recipe from database
+	 */
 	public Recipe searchRecipe(String recipeName) {
 		Statement statement;
 		try {
@@ -162,6 +202,13 @@ public class DatabaseController {
 		return null;
 	}
 
+	/**
+	 * search recipe category method, used to get a list of recipes belong to given
+	 * category searchedCategory
+	 * 
+	 * @param searchedCategory used to search recipes belong to this category
+	 * @return return the ArrayList result of recipes of given category
+	 */
 	public ArrayList<Recipe> searchRecipeList(String searchedCategory) {
 		Statement statement;
 		ArrayList<Recipe> stored_recipes = new ArrayList<>();
@@ -180,7 +227,7 @@ public class DatabaseController {
 				Recipe stored_recipe = new Recipe(recipeName, prepTime, cookTime, picture, instruction, category);
 				stored_recipes.add(stored_recipe);
 			}
-			
+
 			for (Recipe recipe : stored_recipes) {
 				String recipeName = recipe.getName();
 				String sql_searchIngredients = "SELECT ingredientName, description, amount, unit from ingredients where recipeName = \""
@@ -197,7 +244,7 @@ public class DatabaseController {
 				}
 				recipe.setIngredients(ingredients);
 			}
-			
+
 			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();

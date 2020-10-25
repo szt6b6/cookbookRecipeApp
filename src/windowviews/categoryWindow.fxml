@@ -11,7 +11,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Pane prefHeight="638.0" prefWidth="595.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CategoryWindowController">
+<Pane prefHeight="638.0" prefWidth="595.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CategoryWindowController">
 	<children>
 		<MenuButton contentDisplay="CENTER" layoutX="503.0" layoutY="10.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="Go To" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
 			<items>

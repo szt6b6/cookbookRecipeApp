@@ -13,7 +13,8 @@ import model.Recipe;
 import windowviews.WindowViews;
 
 /**
- * WindowController class, use for control the switching of windows
+ * Controller of the mainWindow, acts as an intermediary between mainWindow and
+ * model, defines what should happen on user interaction on mainWindow.
  * 
  * @author szt
  *
@@ -22,7 +23,7 @@ public class MainWindowController implements Initializable {
 
 	private WindowViews windowsView;
 	private DatabaseController databaseController;
-	
+
 	/**
 	 * all window GUI items
 	 */
@@ -33,7 +34,10 @@ public class MainWindowController implements Initializable {
 	@FXML
 	private MenuItem search;
 
-
+	/**
+	 * Constructor of the MainWindowController, connect the mainWindow to the
+	 * database.
+	 */
 	public MainWindowController() {
 		databaseController = new DatabaseController();
 	}
@@ -43,18 +47,35 @@ public class MainWindowController implements Initializable {
 
 	}
 
+	/**
+	 * Show mainWindow.
+	 * 
+	 * @param event, user's interaction with GUI
+	 */
 	public void showMainWindow(ActionEvent event) {
 		windowsView.setMainWindow();
 	}
 
+	/**
+	 * Show searchWindow.
+	 */
 	public void showSearchWindow() {
 		windowsView.setSearchWindow();
 	}
 
+	/**
+	 * Show createWindow.
+	 */
 	public void showCreateWindow() {
 		windowsView.setCreateWindow();
 	}
-	
+
+	/**
+	 * Control the window switching into categoryWindow according to the button
+	 * clicked.
+	 * 
+	 * @param event, user's clicking on five category buttons
+	 */
 	public void actionResponseToMainWindow(ActionEvent event) {
 		Button button = (Button) event.getTarget();
 		String searchedCategory = button.getText();
@@ -62,6 +83,11 @@ public class MainWindowController implements Initializable {
 		windowsView.setCategoryWindow(stored_recipes);
 	}
 
+	/**
+	 * Bind the mainWindowController to the windowViews.
+	 * 
+	 * @param windowViews, windowViews
+	 */
 	public void setView(WindowViews windowViews) {
 		this.windowsView = windowViews;
 	}

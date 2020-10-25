@@ -21,7 +21,7 @@ import model.Recipe;
 import windowviews.WindowViews;
 
 /**
- * WindowController class, use for control the switching of windows
+ * CategoryWindowController class, used for control the action from category page
  * 
  * @author szt
  *
@@ -30,6 +30,9 @@ public class CategoryWindowController implements Initializable {
 
 	private WindowViews windowsView;
 	private DatabaseController databaseController;
+	/**
+	 * store items appears in the recipe list table
+	 */
 	private ObservableList<Recipe> recipesList = FXCollections.observableArrayList();
 
 	/**
@@ -65,10 +68,14 @@ public class CategoryWindowController implements Initializable {
 																														// getRecipeImage
 																														// method
 		recipeListTable_in_categoty.setItems(recipesList);
+		//add see detail button to the table, so that user can see detail of the recipe
 		this.addSeeMoreButtonToTable();
 	}
 
 
+	/**
+	 * Realization of add see detail button and add action listener to it
+	 */
 	private void addSeeMoreButtonToTable() {
 		TableColumn<Recipe, String> colBtn = new TableColumn<>();
 
@@ -102,23 +109,40 @@ public class CategoryWindowController implements Initializable {
 		recipeListTable_in_categoty.getColumns().add(colBtn);
 	}
 
-	public void showMainWindow(ActionEvent event) {
+	/**
+	 * show main window
+	 */
+	public void showMainWindow() {
 		windowsView.setMainWindow();
 	}
 
+	/**
+	 * show search window
+	 */
 	public void showSearchWindow() {
 		windowsView.setSearchWindow();
 	}
 
+	/**
+	 * show create window
+	 */
 	public void showCreateWindow() {
 		windowsView.setCreateWindow();
 	}
 
-	public void setDataAtCateGoryWindow(ArrayList<Recipe> stored_recipes) {
+	/**
+	 * set recipe list data in this page
+	 * @param stored_recipes recipe list of given category
+	 */
+	public void setDataAtCategoryWindow(ArrayList<Recipe> stored_recipes) {
 		recipesList.addAll(stored_recipes);
 		recipeListTable_in_categoty.refresh();
 	}
 	
+	/**
+	 * action response to switching category
+	 * @param event
+	 */
 	public void actionResponseToCategoryWindow(ActionEvent event) {
 		Button button = (Button) event.getTarget();
 		String searchedCategory = button.getText();
@@ -126,16 +150,11 @@ public class CategoryWindowController implements Initializable {
 		windowsView.setCategoryWindow(stored_recipes);
 	}
 
-	public static boolean isInteger(String str) {
-		try {
-			@SuppressWarnings("unused")
-			String bigStr = new Integer(str).toString();
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
-	}
 
+	/**
+	 * set pointer to view class
+	 * @param windowViews aimed view class
+	 */
 	public void setView(WindowViews windowViews) {
 		this.windowsView = windowViews;
 	}

@@ -13,14 +13,14 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Pane prefHeight="622.0" prefWidth="609.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CreateWindowController">
+<Pane prefHeight="622.0" prefWidth="609.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CreateWindowController">
 	<children>
-      <TableView fx:id="ingredientsTable" cache="true" editable="true" layoutX="282.0" layoutY="222.0" prefHeight="349.0" prefWidth="308.0" tableMenuButtonVisible="true">
+      <TableView fx:id="ingredientsTable" cache="true" editable="true" layoutX="282.0" layoutY="222.0" prefHeight="316.0" prefWidth="316.0" tableMenuButtonVisible="true">
          <columns>
-            <TableColumn fx:id="name" editable="false" prefWidth="54.0" text="Name" />
-            <TableColumn fx:id="description" editable="false" prefWidth="100.0" text="Description" />
-            <TableColumn fx:id="amount" editable="false" prefWidth="79.0" text="Amount" />
-            <TableColumn fx:id="unit" editable="false" minWidth="5.0" prefWidth="53.0" text="Unit" />
+            <TableColumn fx:id="name" editable="false" prefWidth="74.0" text="Name" />
+            <TableColumn fx:id="description" editable="false" prefWidth="93.0" text="Description" />
+            <TableColumn fx:id="amount" editable="false" prefWidth="74.0" text="Amount" />
+            <TableColumn fx:id="unit" editable="false" minWidth="5.0" prefWidth="45.0" text="Unit" />
          </columns>
          <cursor>
             <Cursor fx:constant="DEFAULT" />
@@ -57,32 +57,32 @@
 				<Font size="18.0" />
 			</font>
 		</Label>
-		<Button fx:id="createConfirm" alignment="TOP_CENTER" layoutX="34.0" layoutY="584.0" mnemonicParsing="false" onAction="#actionResponseToCreateWindow" text="Confirm" />
-		<Button fx:id="createCancle" layoutX="156.0" layoutY="584.0" mnemonicParsing="false" onAction="#actionResponseToCreateWindow" prefHeight="25.0" prefWidth="92.0" text="Cancel" />
+		<Button fx:id="createConfirm" alignment="TOP_CENTER" layoutX="128.0" layoutY="582.0" mnemonicParsing="false" onAction="#actionResponseToCreateWindow" text="Create the Recipe" />
+		<Button fx:id="createCancle" layoutX="340.0" layoutY="582.0" mnemonicParsing="false" onAction="#actionResponseToCreateWindow" prefHeight="30.0" prefWidth="180.0" text="Clear the Information" />
 		<Label alignment="TOP_CENTER" layoutX="357.0" layoutY="192.0" prefHeight="17.0" prefWidth="129.0" text="Ingredients" textAlignment="JUSTIFY">
 			<font>
 				<Font size="18.0" />
 			</font>
 		</Label>
-		<Button fx:id="addIngredientButton" layoutX="533.0" layoutY="582.0" mnemonicParsing="false" onAction="#actionResponseToCreateWindow" text="Add" />
-		<TextField fx:id="nameOfIngredient" alignment="CENTER" layoutX="288.0" layoutY="584.0" prefHeight="25.0" prefWidth="50.0" promptText="Name">
+		<Button fx:id="addIngredientButton" layoutX="538.0" layoutY="542.0" mnemonicParsing="false" onAction="#actionResponseToCreateWindow" text="Add" />
+		<TextField fx:id="nameOfIngredient" alignment="CENTER" layoutX="280.0" layoutY="544.0" prefHeight="25.0" prefWidth="50.0" promptText="Name">
 			<font>
-				<Font size="9.0" />
+				<Font size="12.0" />
 			</font>
 		</TextField>
-		<TextField fx:id="descriptionOfingredient" alignment="CENTER" layoutX="350.0" layoutY="584.0" prefHeight="25.0" prefWidth="67.0" promptText="Description">
+		<TextField fx:id="descriptionOfingredient" alignment="CENTER" layoutX="334.0" layoutY="544.0" prefHeight="25.0" prefWidth="83.0" promptText="Description">
 			<font>
-				<Font size="9.0" />
+				<Font size="12.0" />
 			</font>
 		</TextField>
-		<TextField fx:id="amountOfIngredient" alignment="CENTER" layoutX="426.0" layoutY="584.0" prefHeight="25.0" prefWidth="50.0" promptText="Amount">
+		<TextField fx:id="amountOfIngredient" alignment="CENTER" layoutX="421.0" layoutY="545.0" prefHeight="25.0" prefWidth="63.0" promptText="Amount">
 			<font>
-				<Font size="9.0" />
+				<Font size="12.0" />
 			</font>
 		</TextField>
-		<TextField fx:id="unitOfIngredient" alignment="CENTER" layoutX="486.0" layoutY="585.0" prefHeight="25.0" prefWidth="36.0" promptText="Unit">
+		<TextField fx:id="unitOfIngredient" alignment="CENTER" layoutX="487.0" layoutY="545.0" prefHeight="25.0" prefWidth="43.0" promptText="Unit">
 			<font>
-				<Font size="9.0" />
+				<Font size="12.0" />
 			</font>
 		</TextField>
       <ChoiceBox fx:id="categoryChoiceBox" layoutX="87.0" layoutY="132.0" prefHeight="30.0" prefWidth="198.0" />

@@ -13,7 +13,8 @@ import model.Recipe;
 import windowviews.WindowViews;
 
 /**
- * WindowController class, use for control the switching of windows
+ * Controller of the searchWindow, acts as an intermediary between searchWindow
+ * and model, defines what should happen on user interaction on searchWindow.
  * 
  * @author szt
  *
@@ -41,27 +42,48 @@ public class SearchWindowController implements Initializable {
 	@FXML
 	private Button searchRecipeButton;
 
+	/**
+	 * Constructor of the searchWindowController, connect the searchWindow to the
+	 * database.
+	 */
 	public SearchWindowController() {
 		databaseController = new DatabaseController();
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 	}
 
+	/**
+	 * Show mainWindow.
+	 * 
+	 * @param event, user's interaction with GUI
+	 */
 	public void showMainWindow(ActionEvent event) {
 		windowsView.setMainWindow();
 	}
 
+	/**
+	 * Show searchWindow.
+	 */
 	public void showSearchWindow() {
 		windowsView.setSearchWindow();
 	}
 
+	/**
+	 * Show createWindow.
+	 */
 	public void showCreateWindow() {
 		windowsView.setCreateWindow();
 	}
-	
+
+	/**
+	 * Control the window switching into detailWindow according to the butten
+	 * clicked.
+	 * 
+	 * @param event, user's clicking on five category buttons
+	 */
 	public void actionResponseToSearchWindow(ActionEvent event) {
 		Recipe searchedRecipe = null;
 		if (searchRecipeTextField.getText() == "")
@@ -76,6 +98,11 @@ public class SearchWindowController implements Initializable {
 		windowsView.setDetailWindow(searchedRecipe);
 	}
 
+	/**
+	 * Bind the searchWindowController to the windowViews.
+	 * 
+	 * @param windowViews, windowViews
+	 */
 	public void setView(WindowViews windowViews) {
 		this.windowsView = windowViews;
 	}

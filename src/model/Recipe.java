@@ -7,6 +7,12 @@ import java.util.ArrayList;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * recipe entity class, used to represent recipe structure
+ * 
+ * @author szt
+ *
+ */
 public class Recipe {
 	String name;
 	String prepTime;
@@ -57,12 +63,13 @@ public class Recipe {
 	public void setIngredients(ArrayList<Ingredient> ingredients) {
 		this.ingredients = ingredients;
 	}
-	
-	//this method is for display pictures in catagoryWindow
+
+	// this method is for display pictures in catagoryWindow, 120 x 218 is the same
+	// as picture in detail window
 	public ImageView getRecipeImage() throws SQLException {
 		ImageView recipeImage = new ImageView(new Image(pic.getBinaryStream()));
-		recipeImage.setFitHeight(200);
-		recipeImage.setFitWidth(300);
+		recipeImage.setFitHeight(120);
+		recipeImage.setFitWidth(218);
 		return recipeImage;
 	}
 

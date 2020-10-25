@@ -1,11 +1,16 @@
 package model;
 
+/**
+ * entity class Ingredient, used to represent ingredient structure
+ * @author szt
+ *
+ */
 public class Ingredient {
-	private String  nameIng;
-	private String  amountIng;//only for 1 person
-	private String  unitIng;
-	private String  descriptionIng;
-	private int serverAmountIng = 1;//set default equals to 1
+	private String nameIng;
+	private String amountIng;// only for 1 person
+	private String unitIng;
+	private String descriptionIng;
+	private int serverAmountIng = 1;// set default equals to 1
 	private String totalAmountIng;
 
 	public Ingredient(String name, String description, String amount, String unit, int serverAmount) {
