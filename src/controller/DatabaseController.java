@@ -62,16 +62,16 @@ public class DatabaseController {
 			statement.setBlob(4, recipe.getPic());
 			statement.setString(5, recipe.getInstruction());
 			statement.setString(6, recipe.getCategory());
-			if (recipe.getIngredients().size() != 0) {
-				for (Ingredient ingredient : recipe.getIngredients()) {
-					String sql_createIngredients = "insert into ingredients (recipeName, ingredientName, description, amount, unit) values (\""
-							+ recipe.getName() + "\", \"" + ingredient.getNameIng() + "\", \""
-							+ ingredient.getDescriptionIng() + "\", \"" + ingredient.getAmountIng() + "\", \""
-							+ ingredient.getUnitIng() + "\");";
-					statement.execute(sql_createIngredients);
-				}
-				statement.execute();
+
+			for (Ingredient ingredient : recipe.getIngredients()) {
+				String sql_createIngredients = "insert into ingredients (recipeName, ingredientName, description, amount, unit) values (\""
+						+ recipe.getName() + "\", \"" + ingredient.getNameIng() + "\", \""
+						+ ingredient.getDescriptionIng() + "\", \"" + ingredient.getAmountIng() + "\", \""
+						+ ingredient.getUnitIng() + "\");";
+				statement.execute(sql_createIngredients);
 			}
+			statement.execute();
+
 			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -115,14 +115,13 @@ public class DatabaseController {
 						+ ingredient.getUnitIng() + "\";";
 				statement.execute(sql_deleteIngredientsFirst);
 			}
-			if (recipe.getIngredients().size() != 0) {
-				for (Ingredient ingredient : neededToAddIngredientInDetailWindow) {
-					String sql_createIngredients = "insert into ingredients (recipeName, ingredientName, description, amount, unit) values (\""
-							+ recipe.getName() + "\", \"" + ingredient.getNameIng() + "\", \""
-							+ ingredient.getDescriptionIng() + "\", \"" + ingredient.getAmountIng() + "\", \""
-							+ ingredient.getUnitIng() + "\");";
-					statement.execute(sql_createIngredients);
-				}
+
+			for (Ingredient ingredient : neededToAddIngredientInDetailWindow) {
+				String sql_createIngredients = "insert into ingredients (recipeName, ingredientName, description, amount, unit) values (\""
+						+ recipe.getName() + "\", \"" + ingredient.getNameIng() + "\", \""
+						+ ingredient.getDescriptionIng() + "\", \"" + ingredient.getAmountIng() + "\", \""
+						+ ingredient.getUnitIng() + "\");";
+				statement.execute(sql_createIngredients);
 			}
 			statement.execute();
 			statement.close();
@@ -192,11 +191,12 @@ public class DatabaseController {
 					ingredients.add(ingredient);
 				}
 				searchedRecipe.setIngredients(ingredients);
+				statement.close();
 				return searchedRecipe;
 			}
-			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return null;
 		}
 
 		return null;

@@ -251,7 +251,6 @@ public class CreateWindowController implements Initializable {
 					stored_recipe = new Recipe(stored_recipeName, stored_prepareTime, stored_cookTime, stored_picture,
 							stored_instruction, stored_category);
 					stored_recipe.setIngredients(new ArrayList<Ingredient>(ingredientsTable.getItems()));
-					ingredients.removeAll(ingredients);
 					if (databaseController.createRecipe(stored_recipe)) {
 						ingredients.clear();
 						windowsView.showCreateSuccessDialog();

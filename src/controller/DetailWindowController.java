@@ -240,7 +240,7 @@ public class DetailWindowController implements Initializable {
 				Image image = new Image("file:" + pic.getAbsolutePath());
 				picture_in_detail.setImage(image);
 			} catch (NullPointerException e) {
-				// cancle select picture锛� do nothing
+				// cancle select picture and do nothing
 			}
 
 		}
@@ -292,7 +292,7 @@ public class DetailWindowController implements Initializable {
 					if (databaseController.updateRecipe(stored_recipe, recipeNameToBeUpdate,
 							neededToDelIngredientInDetailWindow, neededToAddIngredientInDetailWindow)) {
 						ingredients_in_detail.clear();
-						setDataAtDetailWindow(stored_recipe);
+						setDataAtDetailWindow(null);
 						recipeNameToBeUpdate = stored_recipe.getName();
 						windowsView.showUpdateSuccessDialog();
 					} else {
