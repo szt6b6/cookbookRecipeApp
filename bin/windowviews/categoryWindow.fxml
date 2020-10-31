@@ -11,25 +11,45 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Pane prefHeight="638.0" prefWidth="595.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CategoryWindowController">
+<Pane prefHeight="614.0" prefWidth="571.0"
+	style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/8"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="controller.CategoryWindowController">
 	<children>
-		<MenuButton contentDisplay="CENTER" layoutX="503.0" layoutY="10.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="Go To" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+		<MenuButton contentDisplay="CENTER" layoutX="496.0"
+			layoutY="10.0" mnemonicParsing="false"
+			nodeOrientation="LEFT_TO_RIGHT" text="Go To" textAlignment="CENTER"
+			textOverrun="CLIP" wrapText="true">
 			<items>
-				<MenuItem fx:id="home" mnemonicParsing="false" onAction="#showMainWindow" text="Home" />
-				<MenuItem fx:id="create" mnemonicParsing="false" onAction="#showCreateWindow" text="Create" />
-				<MenuItem fx:id="search" mnemonicParsing="false" onAction="#showSearchWindow" text="Search" />
+				<MenuItem fx:id="home" mnemonicParsing="false"
+					onAction="#showMainWindow" text="Home" />
+				<MenuItem fx:id="create" mnemonicParsing="false"
+					onAction="#showCreateWindow" text="Create" />
+				<MenuItem fx:id="search" mnemonicParsing="false"
+					onAction="#showSearchWindow" text="Search" />
 			</items>
 		</MenuButton>
-		<TableView fx:id="recipeListTable_in_categoty" editable="true" layoutX="10.0" layoutY="10.0" prefHeight="566.0" prefWidth="480.0">
+		<TableView fx:id="recipeListTable_in_categoty"
+			editable="true" layoutX="10.0" layoutY="10.0" prefHeight="566.0"
+			prefWidth="480.0">
 			<columns>
-				<TableColumn fx:id="recipeNameColumn_in_category" editable="false" prefWidth="132.0" text="Name of Recipe" />
-				<TableColumn fx:id="recipePictureColumn_in_category" editable="false" prefWidth="271.0" text="Picture" />
+				<TableColumn fx:id="recipeNameColumn_in_category"
+					editable="false" prefWidth="132.0" text="Name of Recipe" />
+				<TableColumn fx:id="recipePictureColumn_in_category"
+					editable="false" prefWidth="271.0" text="Picture" />
 			</columns>
 		</TableView>
-		<Button layoutX="125.0" layoutY="583.0" mnemonicParsing="false" onAction="#actionResponseToCategoryWindow" text="Fried" />
-		<Button layoutX="232.0" layoutY="583.0" mnemonicParsing="false" onAction="#actionResponseToCategoryWindow" text="Boiled" />
-		<Button layoutX="14.0" layoutY="583.0" mnemonicParsing="false" onAction="#actionResponseToCategoryWindow" text="Stired" />
-		<Button alignment="CENTER" layoutX="344.0" layoutY="583.0" mnemonicParsing="false" onAction="#actionResponseToCategoryWindow" text="Baked" />
-		<Button alignment="CENTER" contentDisplay="CENTER" layoutX="455.0" layoutY="583.0" mnemonicParsing="false" onAction="#actionResponseToCategoryWindow" text="Stewed" />
+		<Button layoutX="125.0" layoutY="583.0" mnemonicParsing="false"
+			onAction="#actionResponseToCategoryWindow" text="Fried" />
+		<Button layoutX="232.0" layoutY="583.0" mnemonicParsing="false"
+			onAction="#actionResponseToCategoryWindow" text="Boiled" />
+		<Button layoutX="14.0" layoutY="583.0" mnemonicParsing="false"
+			onAction="#actionResponseToCategoryWindow" text="Stired" />
+		<Button alignment="CENTER" layoutX="344.0" layoutY="583.0"
+			mnemonicParsing="false" onAction="#actionResponseToCategoryWindow"
+			text="Baked" />
+		<Button alignment="CENTER" contentDisplay="CENTER"
+			layoutX="455.0" layoutY="583.0" mnemonicParsing="false"
+			onAction="#actionResponseToCategoryWindow" text="Stewed" />
 	</children>
 </Pane>

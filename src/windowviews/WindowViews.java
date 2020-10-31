@@ -21,7 +21,7 @@ import model.Recipe;
 /**
  * WindowViews class, use corresponding fxml page to show relative window
  * 
- * @author szt s
+ * @author szt
  */
 
 public class WindowViews extends Application {
@@ -155,7 +155,7 @@ public class WindowViews extends Application {
 	/**
 	 * pop up alert dialog to remind user to confirm their creating recipe action
 	 * 
-	 * @return
+	 * @return return clicked result
 	 */
 	public Optional<ButtonType> showCreateConfirmationDialog() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -201,7 +201,7 @@ public class WindowViews extends Application {
 	/**
 	 * pop up alert dialog to remind user to confirm their deleting recipe action
 	 *
-	 * @return
+	 * @return return clicked result
 	 */
 	public Optional<ButtonType> showDeleteConfirmationDialog() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -292,7 +292,7 @@ public class WindowViews extends Application {
 
 	/**
 	 * main method, program starts here
-	 * @param args
+	 * @param args parameters from run configuration
 	 */
 	public static void main(String[] args) {
 		launch(args);

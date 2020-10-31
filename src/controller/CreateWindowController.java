@@ -206,7 +206,7 @@ public class CreateWindowController implements Initializable {
 				Image image = new Image("file:" + pic.getAbsolutePath());
 				picture.setImage(image);
 			} catch (NullPointerException e) {
-				// cancle select picture锛� do nothing
+				// cancle select picture and do nothing
 			}
 
 		}
@@ -238,7 +238,7 @@ public class CreateWindowController implements Initializable {
 				windowsView.alertWindow();
 				return;
 			}
-//			Image picture = new Image(recipeResult.getBlob("picture").getBinaryStream()); //灏咮lob鍥剧墖杞寲涓簀avafx Image
+//			Image picture = new Image(recipeResult.getBlob("picture").getBinaryStream()); //trams Blob image to avafx Image
 			Optional<ButtonType> result = windowsView.showCreateConfirmationDialog();
 			if (result.isPresent() && result.get() == ButtonType.OK) {
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();

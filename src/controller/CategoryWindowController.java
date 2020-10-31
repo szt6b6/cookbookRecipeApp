@@ -141,7 +141,7 @@ public class CategoryWindowController implements Initializable {
 	
 	/**
 	 * action response to switching category
-	 * @param event
+	 * @param event action event
 	 */
 	public void actionResponseToCategoryWindow(ActionEvent event) {
 		Button button = (Button) event.getTarget();
