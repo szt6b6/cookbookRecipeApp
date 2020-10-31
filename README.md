@@ -1,5 +1,5 @@
 # cookbookRecipeApp
-SWE2 Group Project
+SWE2 Group 2 - Project
 ## development enviroment
 jdk8 & mysql8.0
 ## how to run
