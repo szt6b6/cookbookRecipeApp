@@ -38,7 +38,8 @@ import model.Recipe;
 import windowviews.WindowViews;
 
 /**
- * CreateWindowController class, used for control user's action on create recipe window
+ * CreateWindowController class, used for control user's action on create recipe
+ * window
  * 
  * @author szt
  *
@@ -98,7 +99,7 @@ public class CreateWindowController implements Initializable {
 	private TextField unitOfIngredient;
 	@FXML
 	private Button addIngredientButton;
-	//need to be initialized otherwise we get error
+	// need to be initialized otherwise we get error
 	@FXML
 	private TableView<Ingredient> ingredientsTable = new TableView<Ingredient>();
 	@FXML
@@ -118,7 +119,7 @@ public class CreateWindowController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		// createWindow initialize
 		categoryChoiceBox.getItems().addAll(categires);
-		categoryChoiceBox.setValue("fried");//default value
+		categoryChoiceBox.setValue("fried");// default value
 		/**
 		 * set reflection of table columns with methods in ingredient entity
 		 */
@@ -131,7 +132,8 @@ public class CreateWindowController implements Initializable {
 	}
 
 	/**
-	 * add delete button to the table, used for delete ingredients the user input falsely
+	 * add delete button to the table, used for delete ingredients the user input
+	 * falsely
 	 */
 	private void addDelButtonToTable() {
 		TableColumn<Ingredient, String> colBtn = new TableColumn<>();
@@ -191,6 +193,7 @@ public class CreateWindowController implements Initializable {
 
 	/**
 	 * response to user's action on create window
+	 * 
 	 * @param event represents which button the user clicked on the cerate window
 	 */
 	public void actionResponseToCreateWindow(ActionEvent event) {
@@ -217,7 +220,7 @@ public class CreateWindowController implements Initializable {
 			String stored_amount = amountOfIngredient.getText();
 			String stored_unit = unitOfIngredient.getText();
 			if (stored_amount.length() != 0 && stored_description.length() != 0 && stored_unit.length() != 0
-					&& stored_ingredientName.length() != 0 && isInteger(stored_amount)) {
+					&& stored_unit.length() <= 10 && stored_ingredientName.length() != 0 && isInteger(stored_amount)) {
 				ingredients
 						.add(new Ingredient(stored_ingredientName, stored_description, stored_amount, stored_unit, 1));
 			} else {
@@ -278,6 +281,7 @@ public class CreateWindowController implements Initializable {
 
 	/**
 	 * judge prepTime field and cookTime field and amount field are integer or not
+	 * 
 	 * @param str the string to be judged
 	 * @return yes or no about this string is integer
 	 */
@@ -292,6 +296,7 @@ public class CreateWindowController implements Initializable {
 
 	/**
 	 * set view method
+	 * 
 	 * @param windowViews view
 	 */
 	public void setView(WindowViews windowViews) {

@@ -251,7 +251,7 @@ public class DetailWindowController implements Initializable {
 			String stored_amount = amountOfIngredient_in_detail.getText();
 			String stored_unit = unitOfIngredient_in_detail.getText();
 			if (stored_description.length() != 0 && stored_unit.length() != 0 && stored_ingredientName.length() != 0
-					&& isInteger(stored_amount) && isInteger(serveAmount.getText())) {
+					&& stored_unit.length() <= 10 && isInteger(stored_amount) && isInteger(serveAmount.getText())) {
 				int stored_serveAmount = Integer.valueOf(serveAmount.getText());
 				Ingredient addedIngredient = new Ingredient(stored_ingredientName, stored_description, stored_amount,
 						stored_unit, stored_serveAmount);
