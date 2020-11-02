@@ -9,6 +9,7 @@ import controller.DetailWindowController;
 import controller.MainWindowController;
 import controller.SearchWindowController;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,6 +17,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import model.Recipe;
 
 /**
@@ -46,6 +48,21 @@ public class WindowViews extends Application {
 		this.detailWindowController = new DetailWindowController();
 		this.searchWindowController = new SearchWindowController();
 		this.primaryStage = primaryStage;
+		//forbid resize
+		this.primaryStage.setResizable(false);
+		//set close confirm
+		this.primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			
+			@Override
+			public void handle(WindowEvent event) {
+				Optional<ButtonType> exitConfirm = showExitConfirmationDialog();
+				if (exitConfirm.get() == ButtonType.OK) {
+					primaryStage.close();
+				} else {
+					event.consume();
+				}
+			}
+		});
 		primaryStage.setTitle("cookbook");
 		setMainWindow();
 	}
@@ -286,6 +303,20 @@ public class WindowViews extends Application {
 		alert.setTitle("Confirmation");
 		alert.setHeaderText(null);
 		alert.setContentText("Are you sure to clear the information?");
+		Optional<ButtonType> result = alert.showAndWait();
+		return result;
+	}
+	
+	/**
+	 * pop up alert dialog to remind user to confirm exiting action
+	 * 
+	 * @return return user's click action
+	 */
+	public Optional<ButtonType> showExitConfirmationDialog() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Exit");
+		alert.setHeaderText(null);
+		alert.setContentText("Are you sure to exit?");
 		Optional<ButtonType> result = alert.showAndWait();
 		return result;
 	}

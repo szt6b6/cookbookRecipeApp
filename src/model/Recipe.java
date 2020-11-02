@@ -31,6 +31,11 @@ public class Recipe {
 		this.category = category;
 
 	}
+	
+	@Override
+		public String toString() {
+			return name + " prepare for " + prepTime + " cook for " + cookTime;
+		}
 
 	public String getName() {
 		return name;

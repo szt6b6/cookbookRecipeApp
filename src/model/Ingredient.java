@@ -21,6 +21,11 @@ public class Ingredient {
 		this.serverAmountIng = serverAmount;
 		this.totalAmountIng = amount;
 	}
+	
+	@Override
+	public String toString() {
+		return this.nameIng + ": " + descriptionIng + " " + amountIng + " " + unitIng + "per person";
+	}
 
 	public String getNameIng() {
 		return nameIng;
